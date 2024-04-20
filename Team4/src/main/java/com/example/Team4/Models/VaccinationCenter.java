@@ -13,4 +13,8 @@ public class VaccinationCenter {
         this.address = address;
         timeslots = new ArrayList<Timeslot>();
     }
+
+    public ArrayList<Timeslot> getTimeslots() {
+        return timeslots;
+    }
 }

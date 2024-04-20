@@ -1,7 +1,6 @@
 package com.example.Team4.Models;
 
 public class Timeslot {
-    //den evala isFree gia na to doume stin poreia
     private int day;
     private int month;
     private int year;
@@ -10,6 +9,7 @@ public class Timeslot {
     private int startMinute;
     private int endMinute;
     private Doctor doctor;
+    private boolean isFree;
 
     public Timeslot(int day, int month, int year, int hour, int minutes, int startMinute,
                     int endMinute, Doctor doctor) {
@@ -21,6 +21,7 @@ public class Timeslot {
         this.startMinute = startMinute;
         this.endMinute = endMinute;
         this.doctor = doctor;
+        isFree = false;
     }
 
     public int getDay() {
@@ -85,6 +86,14 @@ public class Timeslot {
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
+    }
+
+    public boolean isFree() {
+        return isFree;
+    }
+
+    public void setFree(boolean free) {
+        isFree = free;
     }
 }
 
