@@ -31,9 +31,8 @@ public class VaccinationService {
             return "Your vaccination has expired!";
         else
             return "You have an active vaccination until: " +expirationDate;
-
-
     }
+
 
 
 }
