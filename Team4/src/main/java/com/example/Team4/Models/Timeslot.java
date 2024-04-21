@@ -11,6 +11,8 @@ public class Timeslot {
     private Doctor doctor;
     private boolean isFree;
 
+    private String code;
+
     public Timeslot(int day, int month, int year, int hour, int minutes, int startMinute,
                     int endMinute, Doctor doctor) {
         this.day = day;
