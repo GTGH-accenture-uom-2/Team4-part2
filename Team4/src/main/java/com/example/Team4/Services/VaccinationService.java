@@ -1,8 +1,11 @@
 package com.example.Team4.Services;
 
+import com.example.Team4.Models.Insured;
 import com.example.Team4.Models.Reservation;
 import com.example.Team4.Models.Timeslot;
 import com.example.Team4.Models.Vaccination;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,15 +14,25 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VaccinationService {
 
     List<Vaccination> vaccinations = new ArrayList<>();
     Vaccination vaccination;
+    private static List<Insured> insureds;
 
-    public static List<Vaccination> vaccinationDeclarations(Timeslot timeslot, Long amka, String expirDate) {
+    @Autowired
+    public void setInsuredList(List<Insured> insureds) {
+        this.insureds = insureds;
+    }
 
+    public static List<Vaccination> vaccinationDeclarations(Long amka, String expirDate) {
+        Optional<Insured> selectedInsured = insureds.stream().filter(x->x.getAmka().equals(amka)).findFirst();
+
+
+        return new Vaccination(selectedInsured,expirationDate);
     }
 
     public List<Vaccination> addVaccination(Vaccination vaccination){

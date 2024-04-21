@@ -49,7 +49,7 @@ public class VaccinationController {
     public List<Vaccination> vaccinationDeclarations(@RequestBody Timeslot timeslot,
                                                       @RequestParam Long amka,
                                                       @RequestParam String expirDate){
-        return VaccinationService.vaccinationDeclarations(timeslot,amka,expirDate);
+        return VaccinationService.vaccinationDeclarations(amka,expirDate);
     }
 
 

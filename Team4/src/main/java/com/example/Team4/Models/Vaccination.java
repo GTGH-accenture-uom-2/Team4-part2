@@ -15,6 +15,11 @@ public class Vaccination {
         this.doctor = doctor;
     }
 
+    public Vaccination(Insured insured, String expirationDate) {
+        this.insured = insured;
+        this.expirationDate = expirationDate;
+    }
+
     public Insured getInsured() {
         return insured;
     }
