@@ -31,4 +31,6 @@ public class InsuredController {
         return insuredService.selectTimeslot(insuredAmka, timeslot, doctorAmka);
     }
 
+
+
 }
