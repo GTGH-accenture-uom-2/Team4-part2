@@ -5,6 +5,9 @@ public class Reservation {
     private Insured insured;
     private Timeslot timeslot;
 
+    private  Doctor doctor;
+
+
     public Reservation(Insured insured, Timeslot timeslot) {
         this.insured = insured;
         this.timeslot = timeslot;
@@ -24,5 +27,13 @@ public class Reservation {
 
     public void setTimeslot(Timeslot timeslot) {
         this.timeslot = timeslot;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 }

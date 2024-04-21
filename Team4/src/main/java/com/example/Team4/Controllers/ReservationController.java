@@ -1,12 +1,11 @@
 package com.example.Team4.Controllers;
 
+import com.example.Team4.Models.Doctor;
 import com.example.Team4.Models.Reservation;
+import com.example.Team4.Models.Timeslot;
 import com.example.Team4.Services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +17,14 @@ public class ReservationController {
     @PostMapping()
     public List<Reservation> addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
+    }
+
+    @PutMapping("/ChangeReservation")
+    public Reservation changeReservation(@RequestParam Long amka,
+                                         @RequestBody Timeslot timeslot,
+                                         @RequestBody Doctor doctor ){
+        return reservationService.changeReservation(amka,timeslot,doctor);
+
     }
 
 }

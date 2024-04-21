@@ -8,6 +8,7 @@ public class Insured {
     private String birthdate;
     private String surname;
     private String email;
+    private int reservationChangeCount;
 
     public Insured(Long afm, Long amka, String name, String birthdate, String surname, String email) {
         this.afm = afm;
@@ -16,6 +17,7 @@ public class Insured {
         this.birthdate = birthdate;
         this.surname = surname;
         this.email = email;
+        reservationChangeCount = 0;
     }
 
     public Long getAfm() {
@@ -64,5 +66,16 @@ public class Insured {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getReservationChangeCount() {
+        return reservationChangeCount;
+    }
+
+    public void setReservationChangeCount(int reservationChangeCount) {
+        this.reservationChangeCount = reservationChangeCount;
+    }
+    public void addPlusOne(){
+        reservationChangeCount = reservationChangeCount+1;
     }
 }
