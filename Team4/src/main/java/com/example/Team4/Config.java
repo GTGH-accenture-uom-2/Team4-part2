@@ -6,15 +6,31 @@ import com.example.Team4.Models.Timeslot;
 import com.example.Team4.Models.VaccinationCenter;
 import com.example.Team4.Services.DoctorService;
 import com.example.Team4.Services.InsuredService;
+import com.example.Team4.Services.TimeslotService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
 public class Config {
+
+    @Autowired
+    private Doctor doc1;
+    @Autowired
+    private Doctor doc2;
+    @Autowired
+    private Doctor doc3;
+    @Autowired
+    private Doctor doc4;
+    @Autowired
+    private ArrayList<Timeslot>timeslots1;
+    @Autowired
+    private ArrayList<Timeslot>timeslots2;
 
     @Bean
     public CommandLineRunner commandLineRunner(InsuredService insuredService, DoctorService doctorService) {
@@ -33,41 +49,68 @@ public class Config {
             insuredService.addInsured(new Insured("Cersei", "Lannister", 876328L, "cersei@gmail.com", 986309L, "1/4/1943"));
             insuredService.addInsured(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"));
 
-            Doctor doc1 = new Doctor("Donatello", "Donatel", 87546L);
-            Doctor doc2 = new Doctor("Michelangelo", "Angel", 36433L);
-            Doctor doc3 = new Doctor("Rafaello", "Rafael", 88940L);
-            Doctor doc4 = new Doctor("Leonardo", "DaVinci", 87546L);
-
-            //create arraylist of timeslots for VacCenter1
-            ArrayList<Timeslot> timeslots1 = new ArrayList<>();
-            timeslots1.add(new Timeslot(10, 4, 2024, 9, 0, 9, 30, doc1));
-            timeslots1.add(new Timeslot(10, 4, 2024, 10, 0, 10, 30, doc2));
-            timeslots1.add(new Timeslot(10, 4, 2024, 11, 0, 9, 30, doc1));
-            timeslots1.add(new Timeslot(10, 4, 2024, 12, 0, 10, 30, doc2));
-            timeslots1.add(new Timeslot(10, 4, 2024, 13, 0, 9, 30, doc1));
-            timeslots1.add(new Timeslot(10, 4, 2024, 14, 0, 10, 30, doc2));
-            timeslots1.add(new Timeslot(10, 4, 2024, 15, 0, 9, 30, doc1));
-            timeslots1.add(new Timeslot(10, 4, 2024, 16, 0, 10, 30, doc2));
-            timeslots1.add(new Timeslot(10, 4, 2024, 17, 0, 9, 30, doc1));
-            timeslots1.add(new Timeslot(10, 4, 2024, 18, 0, 10, 30, doc2));
-
-            //create arraylist of timeslots for VacCenter2
-            ArrayList<Timeslot> timeslots2 = new ArrayList<>();
-            timeslots2.add(new Timeslot(10, 4, 2024, 9, 0, 9, 30, doc3));
-            timeslots2.add(new Timeslot(10, 4, 2024, 10, 0, 10, 30, doc4));
-            timeslots2.add(new Timeslot(10, 4, 2024, 11, 0, 9, 30, doc3));
-            timeslots2.add(new Timeslot(10, 4, 2024, 12, 0, 10, 30, doc4));
-            timeslots2.add(new Timeslot(10, 4, 2024, 13, 0, 9, 30, doc3));
-            timeslots2.add(new Timeslot(10, 4, 2024, 14, 0, 10, 30, doc4));
-            timeslots2.add(new Timeslot(10, 4, 2024, 15, 0, 9, 30, doc3));
-            timeslots2.add(new Timeslot(10, 4, 2024, 16, 0, 10, 30, doc4));
-            timeslots2.add(new Timeslot(10, 4, 2024, 17, 0, 9, 30, doc3));
-            timeslots2.add(new Timeslot(10, 4, 2024, 18, 0, 10, 30, doc4));
-
-            VaccinationCenter vaccCenter1 = new VaccinationCenter("123", "casterly rock",timeslots1);
-            VaccinationCenter vaccCenter2 = new VaccinationCenter("456", "storm's end", timeslots2);
-
         };
 
+    }
+
+    @Bean
+    public Doctor doc1(){
+        return new Doctor("Donatello", "Donatel", 55631L);
+    }
+    @Bean
+    public Doctor doc2(){
+        return new Doctor("Rafaello", "Rafael", 90078L);
+    }
+    @Bean
+    public Doctor doc3() {
+        return new Doctor("Michail", "Angel", 32212L);
+    }
+    @Bean
+    public Doctor doc4(){
+        return new Doctor("Leonardo", "DaVinci", 87099L);
+    }
+
+    @Bean
+    public ArrayList<Timeslot> timeslots1(){
+        ArrayList<Timeslot> timeslots1 = new ArrayList<>();
+        timeslots1.add(new Timeslot(10, 4, 2024, 9, 0, 9, 30, doc1));
+        timeslots1.add(new Timeslot(10, 4, 2024, 10, 0, 10, 30, doc2));
+        timeslots1.add(new Timeslot(10, 4, 2024, 11, 0, 9, 30, doc1));
+        timeslots1.add(new Timeslot(10, 4, 2024, 12, 0, 10, 30, doc2));
+        timeslots1.add(new Timeslot(10, 4, 2024, 13, 0, 9, 30, doc1));
+        timeslots1.add(new Timeslot(10, 4, 2024, 14, 0, 10, 30, doc2));
+        timeslots1.add(new Timeslot(10, 4, 2024, 15, 0, 9, 30, doc1));
+        timeslots1.add(new Timeslot(10, 4, 2024, 16, 0, 10, 30, doc2));
+        timeslots1.add(new Timeslot(10, 4, 2024, 17, 0, 9, 30, doc1));
+        timeslots1.add(new Timeslot(10, 4, 2024, 18, 0, 10, 30, doc2));
+
+        return timeslots1;
+    }
+
+    @Bean
+    public ArrayList<Timeslot> timeslots2(){
+        ArrayList<Timeslot> timeslots2 = new ArrayList<>();
+        timeslots2.add(new Timeslot(10, 4, 2024, 9, 0, 9, 30, doc3));
+        timeslots2.add(new Timeslot(10, 4, 2024, 10, 0, 10, 30, doc4));
+        timeslots2.add(new Timeslot(10, 4, 2024, 11, 0, 9, 30, doc3));
+        timeslots2.add(new Timeslot(10, 4, 2024, 12, 0, 10, 30, doc4));
+        timeslots2.add(new Timeslot(10, 4, 2024, 13, 0, 9, 30, doc3));
+        timeslots2.add(new Timeslot(10, 4, 2024, 14, 0, 10, 30, doc4));
+        timeslots2.add(new Timeslot(10, 4, 2024, 15, 0, 9, 30, doc3));
+        timeslots2.add(new Timeslot(10, 4, 2024, 16, 0, 10, 30, doc4));
+        timeslots2.add(new Timeslot(10, 4, 2024, 17, 0, 9, 30, doc3));
+        timeslots2.add(new Timeslot(10, 4, 2024, 18, 0, 10, 30, doc4));
+
+        return timeslots2;
+    }
+
+    @Bean
+    public VaccinationCenter vaccCenter1(){
+        return new VaccinationCenter("123", "casterly rock",timeslots1);
+    }
+
+    @Bean
+    public VaccinationCenter vaccCenter2(){
+        return new VaccinationCenter("456", "storm's end", timeslots2);
     }
 }
