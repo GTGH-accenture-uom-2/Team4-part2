@@ -32,6 +32,7 @@ public class VaccinationService {
         Optional<Insured> selectedInsured = insureds.stream().filter(x->x.getAmka().equals(amka)).findFirst();
 
 
+
         return new Vaccination(selectedInsured,expirationDate);
     }
 
