@@ -1,17 +1,16 @@
 package com.example.Team4.Controllers;
 
+import com.example.Team4.Models.Timeslot;
 import com.example.Team4.Models.Vaccination;
 import com.example.Team4.Services.VaccinationService;
 import com.example.Team4.Util.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import static com.example.Team4.Util.QRCodeGenerator.convertImageToBytes;
 import static com.example.Team4.Util.QRCodeGenerator.generateQRCodeImage;
@@ -44,6 +43,13 @@ public class VaccinationController {
 
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(qrCodeBytes);
 
+    }
+
+    @PostMapping("/declaration")
+    public List<Vaccination> vaccinationDeclarations(@RequestBody Timeslot timeslot,
+                                                      @RequestParam Long amka,
+                                                      @RequestParam String expirDate){
+        return VaccinationService.vaccinationDeclarations(timeslot,amka,expirDate);
     }
 
 
