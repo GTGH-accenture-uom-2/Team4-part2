@@ -26,9 +26,10 @@ public class ReservationService {
         for(Reservation reservation:reservations){
             if(amka==reservation.getInsured().getAmka()){
                 if(reservation.getInsured().getReservationChangeCount()<3){
-                    Reservation res = this.makeReservation(amka,timeslot,doctor);
+                    reservation.setTimeslot(timeslot);
+                    reservation.setDoctor(doctor);
                     reservation.getInsured().addPlusOne();
-                    return res;
+                    return reservation;
                 }
                 else{
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't change the reservation more than 2 times.");
