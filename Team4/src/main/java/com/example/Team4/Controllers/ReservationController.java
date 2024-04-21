@@ -3,11 +3,10 @@ package com.example.Team4.Controllers;
 import com.example.Team4.Models.Reservation;
 import com.example.Team4.Services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,5 +18,22 @@ public class ReservationController {
     public List<Reservation> addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
     }
+    @GetMapping()
+    public List<Reservation> getAllReservations(){
+        return reservationService.getAllReservation();
+    }
+    @GetMapping()
+    public List<Reservation> getUpcomingReservations() {
+        LocalDate currentDay = LocalDate.now();
+
+        List<Reservation> upcomingReservations = new ArrayList<>();
+        for (Reservation reservation : reservationService.getAllReservation()) {
+            LocalDate reservationDate = reservation.getTimeslot().getDay();
+            if (reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay))
+                upcomingReservations.add(reservation);
+        }
+        return upcomingReservations;
+    }
+
 
 }
