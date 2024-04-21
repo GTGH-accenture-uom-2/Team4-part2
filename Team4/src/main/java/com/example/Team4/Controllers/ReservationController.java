@@ -20,11 +20,11 @@ public class ReservationController {
     public List<Reservation> addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
     }
-    @GetMapping()
+    @GetMapping("/all")
     public List<Reservation> getAllReservations(){
         return reservationService.getAllReservation();
     }
-    @GetMapping()
+    @GetMapping("/upcoming")
     public List<Reservation> getUpcomingReservations() {
         LocalDate currentDay = LocalDate.now();
 
@@ -36,7 +36,7 @@ public class ReservationController {
         }
         return upcomingReservations;
     }
-    @GetMapping
+    @GetMapping("/byday")
     public List<Reservation> getReservationsByDay(@RequestParam int day) {
         LocalDate currentDate = LocalDate.now();
         LocalDate requestDate = currentDate.withDayOfMonth(day);
