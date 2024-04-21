@@ -1,23 +1,26 @@
 package com.example.Team4.Models;
 
-public class Insured {
+public class Insured extends Person{
     //den evalla vaccination kai vacCenter gia na to doume stin poreia
     private Long afm;
-    private Long amka;
-    private String name;
     private String birthdate;
-    private String surname;
     private String email;
     private int reservationChangeCount;
 
-    public Insured(Long afm, Long amka, String name, String birthdate, String surname, String email) {
+    public Insured(String name, String surname, Long amka,Long afm, String birthdate, String email, int reservationChangeCount) {
+        super(name, surname, amka);
         this.afm = afm;
-        this.amka = amka;
-        this.name = name;
         this.birthdate = birthdate;
-        this.surname = surname;
         this.email = email;
         reservationChangeCount = 0;
+    }
+
+    public Insured(String name, String surname, Long amka, String email, Long afm, String birthdate ) {
+        super(name, surname, amka);
+        this.email = email;
+        this.afm = afm;
+        this.birthdate = birthdate;
+
     }
 
     public Long getAfm() {
@@ -28,36 +31,12 @@ public class Insured {
         this.afm = afm;
     }
 
-    public Long getAmka() {
-        return amka;
-    }
-
-    public void setAmka(Long amka) {
-        this.amka = amka;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getBirthdate() {
         return birthdate;
     }
 
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getEmail() {
