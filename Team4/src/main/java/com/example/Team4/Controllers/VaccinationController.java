@@ -22,8 +22,6 @@ public class VaccinationController {
 
     @Autowired
     VaccinationService vaccinationService;
-    @Autowired
-    QRCodeGenerator qrCodeGenerator;
 
 
     /*

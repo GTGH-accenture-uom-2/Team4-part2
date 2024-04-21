@@ -1,5 +1,6 @@
 package com.example.Team4.Services;
 
+import com.example.Team4.Models.Reservation;
 import com.example.Team4.Models.Vaccination;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -7,11 +8,19 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class VaccinationService {
 
+    List<Vaccination> vaccinations = new ArrayList<>();
     Vaccination vaccination;
+
+    public List<Vaccination> addVaccination(Vaccination vaccination){
+        vaccinations.add(vaccination);
+        return vaccinations;
+    }
 
     public String getExpirationDate(Long amka){
         if(vaccination.getInsured().getAmka()==amka){
