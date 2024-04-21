@@ -1,5 +1,8 @@
 package com.example.Team4.Models;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Vaccination {
     private Insured insured;
     private Doctor doctor;
@@ -37,6 +40,11 @@ public class Vaccination {
     }
 
     public String getExpirationDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate vaccinationDatetolocalDate = LocalDate.parse(vaccinationDate, formatter);
+        LocalDate expirationDateNotFormatted = vaccinationDatetolocalDate.plusMonths(9);
+        expirationDate =  expirationDateNotFormatted.format(formatter);
+
         return expirationDate;
     }
 
