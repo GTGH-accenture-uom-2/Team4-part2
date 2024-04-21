@@ -30,7 +30,7 @@ public class ReservationController {
 
         List<Reservation> upcomingReservations = new ArrayList<>();
         for (Reservation reservation : reservationService.getAllReservation()) {
-            LocalDate reservationDate = reservation.getTimeslot().getDay();
+            LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
             if (reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay))
                 upcomingReservations.add(reservation);
         }
