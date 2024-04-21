@@ -8,10 +8,15 @@ public class VaccinationCenter {
     private String address;
     private ArrayList<Timeslot> timeslots;
 
+    public VaccinationCenter(String code, String address, ArrayList<Timeslot> timeslots) {
+        this.code = code;
+        this.address = address;
+        this.timeslots = timeslots;
+    }
+
     public VaccinationCenter(String code, String address) {
         this.code = code;
         this.address = address;
-        timeslots = new ArrayList<Timeslot>();
     }
 
     public ArrayList<Timeslot> getTimeslots() {
