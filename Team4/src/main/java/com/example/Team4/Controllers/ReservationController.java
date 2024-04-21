@@ -36,8 +36,19 @@ public class ReservationController {
         }
         return upcomingReservations;
     }
-
-
+    @GetMapping
+    public List<Reservation> getReservationsByDay(@RequestParam int day) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate requestDate = currentDate.withDayOfMonth(day);
+        List<Reservation> ReservationByDay = new ArrayList<>();
+        for (Reservation reservation : reservationService.getAllReservation()) {
+            LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
+            if(reservationDate.equals(requestDate)) {
+                ReservationByDay.add(reservation);
+            }
+        }
+        return ReservationByDay;
+    }
     @PutMapping("/ChangeReservation")
     public Reservation changeReservation(@RequestParam Long amka,
                                          @RequestBody Timeslot timeslot,
