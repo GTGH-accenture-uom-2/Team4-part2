@@ -27,7 +27,7 @@ public class VaccinationService {
 
     @Autowired
      static List<Timeslot> timeslots2;
-    private static   List<Insured> insureds;
+    private static   List<Insured> insureds; //gemisame sta static
 
     @Autowired
     public void setInsuredList(List<Insured> insureds) {

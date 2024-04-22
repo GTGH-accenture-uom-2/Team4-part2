@@ -26,10 +26,11 @@ public class ReservationService {
         for(Reservation reservation:reservations){
             if(amka==reservation.getInsured().getAmka()){
                 if(reservation.getInsured().getReservationChangeCount()<3){
-                    reservation.getTimeslot().setFree(false);
+                    reservation.getTimeslot().setFree(true);
                     reservation.setTimeslot(timeslot);
                     reservation.setDoctor(doctor);
                     reservation.getInsured().addPlusOne();
+                    reservation.getTimeslot().setFree(false);
                     return reservation;
                 }
                 else{
