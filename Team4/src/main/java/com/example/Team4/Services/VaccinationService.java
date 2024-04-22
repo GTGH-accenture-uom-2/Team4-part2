@@ -75,7 +75,7 @@ public class VaccinationService {
     }
 
     public String getExpirationDate(Long amka){
-        if(vaccination.getInsured().getAmka()==amka){
+        if(!vaccination.getInsured().getAmka().equals(amka)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Insured with amka: " +amka + "doesnt exist");
         }
