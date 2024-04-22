@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -34,6 +36,27 @@ public class ReservationService {
         }
         return upcomingReservations;
     }
+    //δοκιμή για pagination (δεν χτυπά error)
+    /*public List<Reservation> getUpcomingReservations(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+
+                                                     @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        LocalDate currentDay = LocalDate.now();
+        Pageable pageable = (Pageable) PageRequest.of(pageNo, pageSize);
+        int start = pageNo *pageSize;
+        int end = Math.min(start + pageSize, reservations.size());
+        List<Reservation> upcomingReservation = reservations
+                .stream()
+                .skip(start)
+                .limit(end - start)
+                .filter(reservation -> {
+                    LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
+                    return reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay);
+                })
+                .collect(Collectors.toList());
+        return upcomingReservation;
+    }
+
+     */
 
     public List<Reservation> getReservationsByDay(@RequestParam int day) {
         LocalDate currentDate = LocalDate.now();
