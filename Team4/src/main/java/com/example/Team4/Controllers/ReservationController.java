@@ -1,5 +1,6 @@
 package com.example.Team4.Controllers;
 
+import com.example.Team4.Dtos.SelectReservationDTO;
 import com.example.Team4.Models.Doctor;
 import com.example.Team4.Models.Reservation;
 import com.example.Team4.Models.Timeslot;
@@ -47,5 +48,10 @@ public class ReservationController {
         return reservationService.changeReservation(amka,timeslot,doctor);
 
     }
+    /*δευτερη εκδοχη
+    @PutMapping("selectReservation")
+    public void selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
+        reservationService.selectReservation(selectReservationDTO);
+    }*/
 
 }
