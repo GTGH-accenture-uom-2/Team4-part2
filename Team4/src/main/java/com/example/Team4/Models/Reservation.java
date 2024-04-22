@@ -1,5 +1,7 @@
 package com.example.Team4.Models;
 
+import com.example.Team4.Dtos.SelectReservationDTO;
+
 public class Reservation {
     //den evala vacCenter gia na to doume stin poreia
     private Insured insured;
@@ -11,6 +13,9 @@ public class Reservation {
     public Reservation(Insured insured, Timeslot timeslot) {
         this.insured = insured;
         this.timeslot = timeslot;
+    }
+
+    public Reservation(SelectReservationDTO selectReservationDTO) {
     }
 
     public Insured getInsured() {

@@ -38,7 +38,7 @@ public class TimeslotService {
         return notFreeTimeslots;
     }
 
-    //============================================================================
+    /*δευτερη εκδοχη
     public List<Timeslot> searchTimeslots(TimeslotDTO timeslotDto) {
         List<Timeslot> freeTimeslot = new ArrayList<>();
         List<VaccinationCenter> vaccinationCenters = vaccinationCenterService.getAllVaccinationCenters();        for(int i=0;i<vaccinationCenters.size();i++) {
@@ -49,8 +49,5 @@ public class TimeslotService {
             }
         }
         return freeTimeslot;
-    }
-
-
-//======================================================================================
+    }*/
 }

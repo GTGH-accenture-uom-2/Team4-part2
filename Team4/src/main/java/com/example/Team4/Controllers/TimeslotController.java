@@ -32,12 +32,12 @@ public class TimeslotController {
         return timeslotService.searchTimeslots(day,month,year);
     }
 
-    //==========================================================================
+   /*δευτερη εκδοχη
     @GetMapping("/searchTimeslot")
     public List<Timeslot> searchTimeslots(@RequestBody TimeslotDTO timeslotDto) {
         return timeslotService.searchTimeslots(timeslotDto);
-    }
-    //==============================================================================
+    }*/
+
 }
 
 
