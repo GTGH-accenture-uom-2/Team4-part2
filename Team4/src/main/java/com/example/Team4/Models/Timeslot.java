@@ -97,5 +97,17 @@ public class Timeslot {
     public void setFree(boolean free) {
         isFree = free;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getFormattedDate() {
+        return String.format("%02d/%02d/%d", day, month, year);
+    }
 }
 

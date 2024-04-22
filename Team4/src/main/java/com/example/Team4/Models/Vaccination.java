@@ -2,6 +2,7 @@ package com.example.Team4.Models;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class Vaccination {
     private Insured insured;
@@ -15,10 +16,13 @@ public class Vaccination {
         this.doctor = doctor;
     }
 
-    public Vaccination(Insured insured, String expirationDate) {
+    public Vaccination(Insured insured,String vaccinationDate, String expirationDate) {
         this.insured = insured;
+        this.vaccinationDate = vaccinationDate;
         this.expirationDate = expirationDate;
     }
+
+
 
     public Insured getInsured() {
         return insured;

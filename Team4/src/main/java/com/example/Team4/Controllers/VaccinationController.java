@@ -46,10 +46,10 @@ public class VaccinationController {
     }
 
     @PostMapping("/declaration")
-    public List<Vaccination> vaccinationDeclarations(@RequestBody Timeslot timeslot,
+    public List<Vaccination> vaccinationDeclarations(@RequestParam String timeslotCode,
                                                       @RequestParam Long amka,
                                                       @RequestParam String expirDate){
-        return VaccinationService.vaccinationDeclarations(amka,expirDate);
+        return VaccinationService.vaccinationDeclarations(timeslotCode,amka,expirDate);
     }
 
 
