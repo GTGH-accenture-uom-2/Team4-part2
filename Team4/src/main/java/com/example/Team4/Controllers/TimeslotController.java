@@ -1,6 +1,8 @@
 package com.example.Team4.Controllers;
 
+import com.example.Team4.Dtos.TimeslotDTO;
 import com.example.Team4.Models.Timeslot;
+import com.example.Team4.Models.VaccinationCenter;
 import com.example.Team4.Services.TimeslotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,9 @@ import java.util.List;
 public class TimeslotController {
     @Autowired
     TimeslotService timeslotService;
+    @Autowired
+    VaccinationCenter vacCenterService;
+
     @PostMapping()
     public List<Timeslot> addTimeslot(@RequestBody Timeslot timeslot) {
         return timeslotService.addTimeslot(timeslot);
@@ -26,6 +31,13 @@ public class TimeslotController {
                                           @RequestParam int year){
         return timeslotService.searchTimeslots(day,month,year);
     }
+
+    //==========================================================================
+    @GetMapping("/searchTimeslot")
+    public List<Timeslot> searchTimeslots(@RequestBody TimeslotDTO timeslotDto) {
+        return timeslotService.searchTimeslots(timeslotDto);
+    }
+    //==============================================================================
 }
 
 
