@@ -23,10 +23,10 @@ public class VaccinationService {
     Vaccination vaccination;
 
     @Autowired
-     static List<Timeslot> timeslots1;
+    List<Timeslot> timeslots1;
 
     @Autowired
-     static List<Timeslot> timeslots2;
+    List<Timeslot> timeslots2;
     private static   List<Insured> insureds; //gemisame sta static
 
     @Autowired
@@ -34,7 +34,7 @@ public class VaccinationService {
         this.insureds = insureds;
     }
 
-    public static List<Vaccination> vaccinationDeclarations(String timeslotCode, Long amka, String expirDate) {
+    public  List<Vaccination> vaccinationDeclarations(String timeslotCode, Long amka, String expirDate) {
         Optional<Insured> selectedInsured = insureds.stream().filter(x->x.getAmka().equals(amka)).findFirst();
         Timeslot timeslot = null;
         boolean state1= false;
