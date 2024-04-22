@@ -4,6 +4,7 @@ import com.example.Team4.Dtos.SelectReservationDTO;
 import com.example.Team4.Models.Doctor;
 import com.example.Team4.Models.Reservation;
 import com.example.Team4.Models.Timeslot;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,16 @@ import java.util.stream.Collectors;
 @Service
 public class ReservationService {
     List<Reservation> reservations = new ArrayList<>();
+    @Autowired
+    List<Doctor> doctors;
+
+    @Autowired
+    List<Timeslot> timeslots1;
+
+    @Autowired
+    List<Timeslot> timeslots2;
+
+
     public List<Reservation> addReservation(Reservation reservation) {
         reservations.add(reservation);
         return reservations;
@@ -73,13 +84,47 @@ public class ReservationService {
     }
 
 
-    public Reservation changeReservation(Long amka, Timeslot timeslot, Doctor doctor) {
+    public Reservation changeReservation(Long insuredAmka,String timeslotCode, Long doctorAmka) {
+        String insuredAmkaStr = String.valueOf(insuredAmka);
+        String doctorAmkaStr = String.valueOf(doctorAmka);
+        if (!insuredAmkaStr.matches("\\d+") || !doctorAmkaStr.matches("\\d+")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Insured AMKA and Doctor AMKA must be numeric values.");
+        }
+
+        List<Timeslot> concatTimeslotLists = new ArrayList<>();
+        concatTimeslotLists.addAll(timeslots1);
+        concatTimeslotLists.addAll(timeslots2);
+        Doctor validDoctor = null;
+        Timeslot newTimeslot = null;
+        for(Doctor dct:doctors){
+            if(doctorAmka==dct.getAmka()){
+                validDoctor = dct;
+                break;
+            }else{
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Doctor with amka: " +doctorAmka + "doesnt exist");
+            }
+        }
+        for(Timeslot tmsl:concatTimeslotLists){
+            if(timeslotCode.equals(tmsl.getCode())){
+                if(tmsl.isFree()){
+                newTimeslot = tmsl;
+                break;} else {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Timeslot with code: " +timeslotCode + "is full");
+                }
+            }else{
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        " Timeslot with code: " +timeslotCode + "doesnt exist");
+            }
+        }
         for(Reservation reservation:reservations){
-            if(amka==reservation.getInsured().getAmka()){
+            if(insuredAmka==reservation.getInsured().getAmka()){
                 if(reservation.getInsured().getReservationChangeCount()<3){
                     reservation.getTimeslot().setFree(true);
-                    reservation.setTimeslot(timeslot);
-                    reservation.setDoctor(doctor);
+                    reservation.setTimeslot(newTimeslot);
+                    reservation.setDoctor(validDoctor);
                     reservation.getInsured().addPlusOne();
                     reservation.getTimeslot().setFree(false);
                     return reservation;
@@ -89,11 +134,12 @@ public class ReservationService {
                 }
             }
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Insured with amka: " +amka + "doesnt exist");
+                    "Insured with amka: " +insuredAmka + "doesnt exist");
 
 
         }
-        return null;
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                "Unexpected error occurred while processing the vaccination request");
     }
     /*δευτερη εκδοχη
     public void selectReservation(SelectReservationDTO selectReservationDTO) {

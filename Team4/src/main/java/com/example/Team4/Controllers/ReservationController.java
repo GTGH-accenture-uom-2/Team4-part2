@@ -43,9 +43,9 @@ public class ReservationController {
     }
     @PutMapping("/ChangeReservation")
     public Reservation changeReservation(@RequestParam Long amka,
-                                         @RequestBody Timeslot timeslot,
-                                         @RequestBody Doctor doctor ){
-        return reservationService.changeReservation(amka,timeslot,doctor);
+                                         @RequestParam String timeslotCode,
+                                         @RequestParam Long doctorAmka ){
+        return reservationService.changeReservation(amka,timeslotCode,doctorAmka);
 
     }
     /*δευτερη εκδοχη
