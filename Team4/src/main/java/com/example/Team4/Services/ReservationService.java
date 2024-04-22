@@ -5,8 +5,10 @@ import com.example.Team4.Models.Reservation;
 import com.example.Team4.Models.Timeslot;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,31 @@ public class ReservationService {
     }
     public List<Reservation> getAllReservation() {
         return reservations;
+    }
+
+    public List<Reservation> getUpcomingReservation() {
+        LocalDate currentDay = LocalDate.now();
+
+        List<Reservation> upcomingReservations = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
+            if (reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay))
+                upcomingReservations.add(reservation);
+        }
+        return upcomingReservations;
+    }
+
+    public List<Reservation> getReservationsByDay(@RequestParam int day) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate requestDate = currentDate.withDayOfMonth(day);
+        List<Reservation> ReservationByDay = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
+            if(reservationDate.equals(requestDate)) {
+                ReservationByDay.add(reservation);
+            }
+        }
+        return ReservationByDay;
     }
 
 
