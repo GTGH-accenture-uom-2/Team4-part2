@@ -28,6 +28,14 @@ public class ReservationController {
     public List<Reservation> getUpcomingReservations() {
         return reservationService.getUpcomingReservation();
     }
+    /*@GetMapping()
+    public List<Reservation> getUpcomingReservations(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                                     @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        return reservationService.getUpcomingReservations(pageNo,pageSize);
+    }
+
+     */
+
     @GetMapping("/byday")
     public List<Reservation> getReservationsByDay(@RequestParam int day) {
        return reservationService.getReservationsByDay(day);
