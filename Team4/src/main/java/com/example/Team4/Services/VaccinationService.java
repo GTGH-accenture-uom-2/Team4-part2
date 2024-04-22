@@ -19,21 +19,54 @@ import java.util.Optional;
 @Service
 public class VaccinationService {
 
-    List<Vaccination> vaccinations = new ArrayList<>();
+    static List<Vaccination> vaccinations = new ArrayList<>();
     Vaccination vaccination;
-    private static List<Insured> insureds;
+
+    @Autowired
+     static List<Timeslot> timeslots1;
+
+    @Autowired
+     static List<Timeslot> timeslots2;
+    private static   List<Insured> insureds;
 
     @Autowired
     public void setInsuredList(List<Insured> insureds) {
         this.insureds = insureds;
     }
 
-    public static List<Vaccination> vaccinationDeclarations(Long amka, String expirDate) {
+    public static List<Vaccination> vaccinationDeclarations(String timeslotCode, Long amka, String expirDate) {
         Optional<Insured> selectedInsured = insureds.stream().filter(x->x.getAmka().equals(amka)).findFirst();
+        Timeslot timeslot = null;
+        boolean state1= false;
+        boolean state2=false;
+        for(Timeslot tmslt:timeslots1){
+            if(tmslt.getCode().equals(timeslotCode)){
+                timeslot = tmslt;
+                state1=true;
+            }
+        }
+        for(Timeslot tmslt:timeslots2){
+            if(tmslt.getCode().equals(timeslotCode)){
+                timeslot = tmslt;
+                state2 = true;
+            }
+        }
+        if((state1||state2)&&(selectedInsured.isPresent())){
+            String vaccDate = timeslot.getFormattedDate();
+            Vaccination vacc = new Vaccination(selectedInsured.get(),vaccDate,expirDate);
+            vaccinations.add(vacc);
+            return vaccinations;
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Insured with Timeslot code: " +timeslotCode + "doesnt exist");
+        }
 
 
 
-        return new Vaccination(selectedInsured,expirationDate);
+
+
+        //return new Vaccination(selectedInsured,vaccDate,expirDate);
     }
 
     public List<Vaccination> addVaccination(Vaccination vaccination){
