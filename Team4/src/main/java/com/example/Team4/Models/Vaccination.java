@@ -16,13 +16,12 @@ public class Vaccination {
         this.doctor = doctor;
     }
 
-    public Vaccination(Insured insured,String vaccinationDate, String expirationDate) {
+    public Vaccination(Insured insured, Doctor doctor, String vaccinationDate, String expirationDate) {
         this.insured = insured;
+        this.doctor = doctor;
         this.vaccinationDate = vaccinationDate;
         this.expirationDate = expirationDate;
     }
-
-
 
     public Insured getInsured() {
         return insured;

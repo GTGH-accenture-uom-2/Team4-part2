@@ -1,9 +1,6 @@
 package com.example.Team4.Services;
 
-import com.example.Team4.Models.Insured;
-import com.example.Team4.Models.Reservation;
-import com.example.Team4.Models.Timeslot;
-import com.example.Team4.Models.Vaccination;
+import com.example.Team4.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
@@ -27,46 +24,60 @@ public class VaccinationService {
 
     @Autowired
     List<Timeslot> timeslots2;
-    private static   List<Insured> insureds; //gemisame sta static
+
+    @Autowired
+    List<Doctor> doctors;
+
+    List<Insured> insureds;
 
     @Autowired
     public void setInsuredList(List<Insured> insureds) {
         this.insureds = insureds;
     }
 
-    public  List<Vaccination> vaccinationDeclarations(String timeslotCode, Long amka, String expirDate) {
-        Optional<Insured> selectedInsured = insureds.stream().filter(x->x.getAmka().equals(amka)).findFirst();
+    public  Vaccination vaccinationDeclarations(String timeslotCode, Long insuredAmka, String expirDate,Long doctorAmka) {
+        Optional<Insured> selectedInsured = insureds.stream().filter(x->x.getAmka().equals(insuredAmka)).findFirst();
         Timeslot timeslot = null;
+        Doctor doctor = null;
         boolean state1= false;
         boolean state2=false;
+        boolean state3= false;
         for(Timeslot tmslt:timeslots1){
             if(tmslt.getCode().equals(timeslotCode)){
                 timeslot = tmslt;
                 state1=true;
+                break;
             }
         }
         for(Timeslot tmslt:timeslots2){
             if(tmslt.getCode().equals(timeslotCode)){
                 timeslot = tmslt;
                 state2 = true;
+                break;
             }
         }
-        if((state1||state2)&&(selectedInsured.isPresent())){
-            String vaccDate = timeslot.getFormattedDate();
-            Vaccination vacc = new Vaccination(selectedInsured.get(),vaccDate,expirDate);
-            vaccinations.add(vacc);
-            return vaccinations;
+
+        for(Doctor dcr:doctors){
+            if(dcr.getAmka()==doctorAmka){
+                doctor = dcr;
+                state3 = true;
+            }
         }
-        else {
+        if((state1||state2)&&(selectedInsured.isPresent())&&(state3)){
+            String vaccDate = timeslot.getFormattedDate();
+            return  new Vaccination(selectedInsured.get(),doctor,vaccDate,expirDate);
+
+        } else if(state1==false||state2==false) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Insured with Timeslot code: " +timeslotCode + "doesnt exist");
+        } else if (state3==false) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Doctor with amka : " +doctorAmka + "doesnt exist");
+        }else{
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Unexpected error occurred while processing the vaccination request");
         }
 
-
-
-
-
-        //return new Vaccination(selectedInsured,vaccDate,expirDate);
     }
 
     public List<Vaccination> addVaccination(Vaccination vaccination){

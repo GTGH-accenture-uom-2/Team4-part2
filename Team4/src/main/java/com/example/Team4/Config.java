@@ -32,6 +32,9 @@ public class Config {
     @Autowired
     private ArrayList<Timeslot>timeslots2;
 
+    @Autowired
+    private ArrayList<Doctor>doctors;
+
     @Bean
     public CommandLineRunner commandLineRunner(InsuredService insuredService) {
 
@@ -102,6 +105,15 @@ public class Config {
         timeslots2.add(new Timeslot(10, 4, 2024, 18, 0, 10, 30, doc4));
 
         return timeslots2;
+    }
+
+    @Bean
+    public ArrayList<Doctor> doctors(){
+        doctors.add(doc1);
+        doctors.add(doc2);
+        doctors.add(doc3);
+        doctors.add(doc4);
+        return doctors;
     }
 
     @Bean
