@@ -33,7 +33,7 @@ public class Config {
     private ArrayList<Timeslot>timeslots2;
 
     @Bean
-    public CommandLineRunner commandLineRunner(InsuredService insuredService, DoctorService doctorService) {
+    public CommandLineRunner commandLineRunner(InsuredService insuredService) {
 
         return args -> {
             insuredService.addInsured(new Insured("Petyr", "Baelish", 128975L, "petyr@gmail.com", 673553L, "11/03/1935"));
