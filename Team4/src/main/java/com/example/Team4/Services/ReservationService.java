@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ReservationService {
@@ -91,6 +92,47 @@ public class ReservationService {
     public Reservation changeReservation(Long insuredAmka,String timeslotCode, Long doctorAmka) {
         String insuredAmkaStr = String.valueOf(insuredAmka);
         String doctorAmkaStr = String.valueOf(doctorAmka);
+
+        if (!insuredAmkaStr.matches("\\d+") || !doctorAmkaStr.matches("\\d+")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Insured AMKA and Doctor AMKA must be numeric values.");
+        }
+
+        Doctor validDoctor = doctors.stream()
+                .filter(dct -> doctorAmka.equals(dct.getAmka()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Doctor with AMKA: " + doctorAmka + " does not exist"));
+
+        List<Timeslot> concatTimeslotLists = Stream.concat(timeslots1.stream(), timeslots2.stream())
+                .collect(Collectors.toList());
+
+        Timeslot newTimeslot = concatTimeslotLists.stream()
+                .filter(tmsl -> timeslotCode.equals(tmsl.getCode()) && tmsl.isFree())
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Timeslot with code: " + timeslotCode + " is full or does not exist"));
+
+        Reservation reservation = reservations.stream()
+                .filter(r -> insuredAmka.equals(r.getInsured().getAmka()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Insured with AMKA: " + insuredAmka + " does not exist"));
+
+        if (reservation.getInsured().getReservationChangeCount() >= 3) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't change the reservation more than 2 times.");
+        }
+
+        reservation.getTimeslot().setFree(true);
+        reservation.setTimeslot(newTimeslot);
+        reservation.setDoctor(validDoctor);
+        reservation.getInsured().addPlusOne();
+        newTimeslot.setFree(false);
+
+        return reservation;
+    }
+        /*String insuredAmkaStr = String.valueOf(insuredAmka);
+        String doctorAmkaStr = String.valueOf(doctorAmka);
         if (!insuredAmkaStr.matches("\\d+") || !doctorAmkaStr.matches("\\d+")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Insured AMKA and Doctor AMKA must be numeric values.");
@@ -143,8 +185,8 @@ public class ReservationService {
 
         }
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                "Unexpected error occurred while processing the vaccination request");
-    }
+                "Unexpected error occurred while processing the vaccination request");*/
+    
 
  56-make-reservation-ckeck-if-availiable
     ppublic List<Reservation> selectReservation(SelectReservationDTO selectReservationDTO) {
