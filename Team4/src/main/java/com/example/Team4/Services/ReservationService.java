@@ -29,6 +29,9 @@ public class ReservationService {
     @Autowired
     List<Timeslot> timeslots2;
 
+    @Autowired
+    private InsuredService insuredService;
+
 
     public List<Reservation> addReservation(Reservation reservation) {
         reservations.add(reservation);
@@ -143,10 +146,34 @@ public class ReservationService {
                 "Unexpected error occurred while processing the vaccination request");
     }
 
+ 56-make-reservation-ckeck-if-availiable
+    ppublic List<Reservation> selectReservation(SelectReservationDTO selectReservationDTO) {
+        List<VaccinationCenter> vaccinationCenters = vaccinationCenterService.getAllVaccinationCenters();
+        boolean flag= false;
+        for (int i = 0; i < vaccinationCenters.size(); i++) {
+            for (var elem : vaccinationCenters.get(i).getTimeslots()) {
+                if (elem.isFree() && elem.getDay() == selectReservationDTO.getTimeslot().getDay() &&
+                        elem.getMonth() == selectReservationDTO.getTimeslot().getMonth()
+                        && elem.getYear() == selectReservationDTO.getTimeslot().getYear() &&
+                        selectReservationDTO.getDoctor().getAmka() == elem.getDoctor().getAmka()) {
+                    flag = true;
+                }
+            }
+        }
+        if (flag) {
+            Insured newinsured = insuredService.findByAmka(selectReservationDTO.getAmka());
+            if (newinsured == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, wrong amka");
+            }
+            Reservation newReservation = new Reservation(newinsured, selectReservationDTO.getTimeslot());
+            reservations.add(newReservation);
+        }else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, not availiable reservation");
+        }
+        return reservations;
+    }
+    }
 
-    /*δευτερη εκδοχη
-    public void selectReservation(SelectReservationDTO selectReservationDTO) {
-        Reservation newReservation = new Reservation(selectReservationDTO);
-        reservations.add(newReservation);
-    }*/
+
+  
 }

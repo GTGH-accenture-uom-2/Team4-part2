@@ -48,10 +48,10 @@ public class ReservationController {
         return reservationService.changeReservation(amka,timeslotCode,doctorAmka);
 
     }
-    /*δευτερη εκδοχη
+
     @PutMapping("selectReservation")
     public void selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
         reservationService.selectReservation(selectReservationDTO);
-    }*/
+    }
 
 }
