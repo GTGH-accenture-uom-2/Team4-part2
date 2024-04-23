@@ -72,11 +72,10 @@ public class VaccinationService {
                 state3 = true;
             }
         }
-                           //&&(selectedInsured.isPresent())
+                           
         if((state1||state2)&&(state3)){
             String vaccDate = timeslot.getFormattedDate();
             return  new Vaccination(selectedInsured,doctor,vaccDate,expirDate);
-                                     //selectedInsured.get()
         } else if(state1==false||state2==false) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Timeslot with code: " +timeslotCode + "doesnt exist");
