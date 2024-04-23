@@ -9,6 +9,7 @@ public class Vaccination {
     private Doctor doctor;
     private String vaccinationDate;
     private String expirationDate;
+    private Vaccine vaccine;
 
     public Vaccination(Insured insured, String vaccinationDate, Doctor doctor) {
         this.insured = insured;
@@ -21,6 +22,14 @@ public class Vaccination {
         this.doctor = doctor;
         this.vaccinationDate = vaccinationDate;
         this.expirationDate = expirationDate;
+    }
+
+    public Vaccination(Insured insured, Doctor doctor, String vaccinationDate, String expirationDate, Vaccine vaccine) {
+        this.insured = insured;
+        this.doctor = doctor;
+        this.vaccinationDate = vaccinationDate;
+        this.expirationDate = expirationDate;
+        this.vaccine = vaccine;
     }
 
     public Insured getInsured() {
@@ -50,7 +59,7 @@ public class Vaccination {
     public String getExpirationDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate vaccinationDatetolocalDate = LocalDate.parse(vaccinationDate, formatter);
-        LocalDate expirationDateNotFormatted = vaccinationDatetolocalDate.plusMonths(9);
+        LocalDate expirationDateNotFormatted = vaccinationDatetolocalDate.plusMonths(vaccine.getMonthlyDuration());
         expirationDate =  expirationDateNotFormatted.format(formatter);
 
         return expirationDate;
