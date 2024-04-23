@@ -28,8 +28,6 @@ public class VaccinationService {
     @Autowired
     List<Doctor> doctors;
     @Autowired
-    Vaccine vaccine;
-    @Autowired
     List<Vaccine> vaccines;
 
     List<Insured> insureds;

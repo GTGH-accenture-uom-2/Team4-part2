@@ -14,8 +14,6 @@ import java.util.List;
 public class TimeslotController {
     @Autowired
     TimeslotService timeslotService;
-    @Autowired
-    VaccinationCenter vacCenterService;
 
     @PostMapping()
     public List<Timeslot> addTimeslot(@RequestBody Timeslot timeslot) {
