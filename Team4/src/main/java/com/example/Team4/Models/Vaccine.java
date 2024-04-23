@@ -4,19 +4,11 @@ public class Vaccine {
     private String name;
     private int monthlyDuration;
 
-    public Vaccine(String name) {
+    public Vaccine(String name, int monthlyDuration) {
         this.name = name;
-        if((this.name).equals("pfizer")){
-            monthlyDuration = 9;
-        } else if((this.name).equals("moderna")){
-            monthlyDuration = 10;
-        } else if((this.name).equals("astrazeneca")){
-            monthlyDuration = 8;
-        } else if ((this.name).equals("johnson")) {
-            monthlyDuration = 6;
-        }
-
+        this.monthlyDuration = monthlyDuration;
     }
+
 
 
     public String getName() {

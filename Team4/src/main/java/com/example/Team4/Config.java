@@ -33,7 +33,15 @@ public class Config {
     @Autowired
     private ArrayList<Doctor>doctors;
     @Autowired
-    private Vaccine vaccine;
+    private Vaccine vaccine1;
+    @Autowired
+    private Vaccine vaccine2;
+    @Autowired
+    private Vaccine vaccine3;
+    @Autowired
+    private Vaccine vaccine4;
+    @Autowired
+    private ArrayList<Vaccine> vaccines;
 
     @Bean
     public CommandLineRunner commandLineRunner(InsuredService insuredService) {
@@ -131,12 +139,34 @@ public class Config {
     }
 
     @Bean
-    public Vaccine vaccine(){
-        return new Vaccine("pfizer");
+    public Vaccine vaccine1(){
+        return new Vaccine("pfizer",9);
+    }
+    @Bean
+    public Vaccine vaccine2(){
+        return new Vaccine("johnson",6);
+    }
+    @Bean
+    public Vaccine vaccine3(){
+        return new Vaccine("moderna",10);
+    }
+    @Bean
+    public Vaccine vaccine4(){
+        return new Vaccine("astrazeneca",8);
+    }
+
+    @Bean
+    public ArrayList<Vaccine> vaccines(){
+        vaccines.add(vaccine1);
+        vaccines.add(vaccine2);
+        vaccines.add(vaccine3);
+        vaccines.add(vaccine4);
+        return vaccines;
     }
 
     @Bean Vaccination vaccination(){
         return new Vaccination(new Insured("Cersei", "Lannister", 876328L, "cersei@gmail.com", 986309L, "1/4/1943"), doc1, "12/10/2023","12/07/2024",vaccine);
     }
+
 
 }

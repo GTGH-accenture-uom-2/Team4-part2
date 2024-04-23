@@ -29,6 +29,8 @@ public class VaccinationService {
     List<Doctor> doctors;
     @Autowired
     Vaccine vaccine;
+    @Autowired
+    List<Vaccine> vaccines;
 
     List<Insured> insureds;
 
@@ -76,9 +78,14 @@ public class VaccinationService {
         }
 
         Vaccine selectedVaccine=null;
-        if(vaccineName.equals(vaccine.getName()))
-            selectedVaccine = vaccine;
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Vaccine: " + vaccineName + " doesn't exist");
+        for(Vaccine vaccine: vaccines) {
+            if (vaccine.getName().equals(vaccineName)) {
+                selectedVaccine = vaccine;
+                break;
+            }
+        }
+        if(selectedVaccine==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Vaccine: " + vaccineName + " doesn't exist");
 
         
 
