@@ -76,11 +76,12 @@ public class VaccinationService {
                 state3 = true;
             }
         }
-
+        int addMonths = 0;
         Vaccine selectedVaccine=null;
         for(Vaccine vaccine: vaccines) {
             if (vaccine.getName().equals(vaccineName)) {
                 selectedVaccine = vaccine;
+                addMonths = selectedVaccine.getMonthlyDuration();
                 break;
             }
         }
@@ -89,9 +90,15 @@ public class VaccinationService {
 
         
 
-        if((state1||state2)&&(state3)){
+        if((state1||state2)&&(state3)&&addMonths>0){
             String vaccDate = timeslot.getFormattedDate();
-            return  new Vaccination(selectedInsured,doctor,vaccDate,expirationDate,selectedVaccine);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate date = LocalDate.parse(vaccDate, formatter);
+            // Add months
+            LocalDate expirationDate = date.plusMonths(addMonths);
+            // Format the expiration date back to a string
+            String formattedExpirationDate = expirationDate.format(formatter);
+            return  new Vaccination(selectedInsured,doctor,vaccDate,formattedExpirationDate,selectedVaccine);
         } else if(state1==false||state2==false) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Timeslot with code: " +timeslotCode + "doesnt exist");
