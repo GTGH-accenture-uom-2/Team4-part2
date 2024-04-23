@@ -1,13 +1,14 @@
 package com.example.Team4.Dtos;
 
-import jakarta.persistence.Persistence;
+import com.example.Team4.Models.Person;
 
-public class InsuredDTO extends Persistence {
+public class InsuredDTO extends Person {
     private Long afm;
     private String birthdate;
     private String email;
 
-    public InsuredDTO(Long afm, String birthdate, String email) {
+    public InsuredDTO(String name, String surname, Long amka, Long afm, String birthdate, String email) {
+        super(name, surname, amka);
         this.afm = afm;
         this.birthdate = birthdate;
         this.email = email;
