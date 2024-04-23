@@ -19,6 +19,12 @@ public class Reservation {
     public Reservation(SelectReservationDTO selectReservationDTO) {
     }
 
+    public Reservation(Insured insured, Timeslot timeslot, Doctor doctor) {
+        this.insured = insured;
+        this.timeslot = timeslot;
+        this.doctor = doctor;
+    }
+
     public Insured getInsured() {
         return insured;
     }

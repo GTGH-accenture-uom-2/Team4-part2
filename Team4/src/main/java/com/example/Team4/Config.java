@@ -1,11 +1,9 @@
 package com.example.Team4;
 
-import com.example.Team4.Models.Doctor;
-import com.example.Team4.Models.Insured;
-import com.example.Team4.Models.Timeslot;
-import com.example.Team4.Models.VaccinationCenter;
+import com.example.Team4.Models.*;
 import com.example.Team4.Services.DoctorService;
 import com.example.Team4.Services.InsuredService;
+import com.example.Team4.Services.ReservationService;
 import com.example.Team4.Services.TimeslotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -34,6 +32,8 @@ public class Config {
 
     @Autowired
     private ArrayList<Doctor>doctors;
+    @Autowired
+    private Vaccine vaccine;
 
     @Bean
     public CommandLineRunner commandLineRunner(InsuredService insuredService) {
@@ -49,8 +49,7 @@ public class Config {
             insuredService.addInsured(new Insured("Jon", "Snow", 898674L, "jon@gmail.com", 876430L, "18/4/1980"));
             insuredService.addInsured(new Insured("Daenerys", "Targaryen", 875643L, "daeneys@gmail.com", 998764L, "1/5/1989"));
             insuredService.addInsured(new Insured("Tyrion", "Lannister", 7635234L, "tyrion@gmail.com", 926254L, "10/7/1970"));
-            insuredService.addInsured(new Insured("Cersei", "Lannister", 876328L, "cersei@gmail.com", 986309L, "1/4/1943"));
-            insuredService.addInsured(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"));
+
 
         };
 
@@ -125,4 +124,19 @@ public class Config {
     public VaccinationCenter vaccCenter2(){
         return new VaccinationCenter("456", "storm's end", timeslots2);
     }
+
+    @Bean
+    public Reservation reservation(){
+        return new Reservation(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"),timeslots1.get(1),doc1);
+    }
+
+    @Bean
+    public Vaccine vaccine(){
+        return new Vaccine("pfizer");
+    }
+
+    @Bean Vaccination vaccination(){
+        return new Vaccination(new Insured("Cersei", "Lannister", 876328L, "cersei@gmail.com", 986309L, "1/4/1943"), doc1, "12/10/2023","12/07/2024",vaccine);
+    }
+
 }
