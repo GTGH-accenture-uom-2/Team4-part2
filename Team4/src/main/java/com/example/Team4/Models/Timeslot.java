@@ -1,6 +1,7 @@
 package com.example.Team4.Models;
 
 public class Timeslot {
+    private static int lastAssignedCode = 0;
     private int day;
     private int month;
     private int year;
@@ -10,11 +11,11 @@ public class Timeslot {
     private int endMinute;
     private Doctor doctor;
     private boolean isFree;
-
     private String code;
 
     public Timeslot(int day, int month, int year, int hour, int minutes, int startMinute,
                     int endMinute, Doctor doctor) {
+        lastAssignedCode++;
         this.day = day;
         this.month = month;
         this.year = year;
@@ -24,6 +25,7 @@ public class Timeslot {
         this.endMinute = endMinute;
         this.doctor = doctor;
         isFree = false;
+        code = Integer.toString(lastAssignedCode);
     }
 
     public int getDay() {
@@ -109,5 +111,7 @@ public class Timeslot {
     public String getFormattedDate() {
         return String.format("%02d/%02d/%d", day, month, year);
     }
+
+    
 }
 
