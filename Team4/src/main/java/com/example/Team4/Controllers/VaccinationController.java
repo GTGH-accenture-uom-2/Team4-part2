@@ -2,6 +2,7 @@ package com.example.Team4.Controllers;
 
 import com.example.Team4.Models.Timeslot;
 import com.example.Team4.Models.Vaccination;
+import com.example.Team4.Models.Vaccine;
 import com.example.Team4.Services.VaccinationService;
 import com.example.Team4.Util.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,9 @@ public class VaccinationController {
     public Vaccination vaccinationDeclarations(@RequestParam String timeslotCode,
                                                       @RequestParam Long insuredAmka,
                                                       @RequestParam String expirDate,
-                                               @RequestParam Long doctorAmka){
-        return vaccinationService.vaccinationDeclarations(timeslotCode,insuredAmka,expirDate,doctorAmka);
+                                               @RequestParam Long doctorAmka,
+                                                @RequestParam String vaccineName){
+        return vaccinationService.vaccinationDeclarations(timeslotCode,insuredAmka,doctorAmka,vaccineName);
     }
 
 
