@@ -49,7 +49,7 @@ public class ReservationController {
 
     }
 
-    @PutMapping("selectReservation")
+    @PutMapping("/selectReservation")
     public void selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
         reservationService.selectReservation(selectReservationDTO);
     }

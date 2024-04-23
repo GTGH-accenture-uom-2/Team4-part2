@@ -165,7 +165,7 @@ public class Config {
     }
 
     @Bean Vaccination vaccination(){
-        return new Vaccination(new Insured("Cersei", "Lannister", 876328L, "cersei@gmail.com", 986309L, "1/4/1943"), doc1, "12/10/2023","12/07/2024",vaccine);
+        return new Vaccination(new Insured("Cersei", "Lannister", 876328L, "cersei@gmail.com", 986309L, "1/4/1943"), doc1, "12/10/2023","12/07/2024",vaccine1);
     }
 
 
