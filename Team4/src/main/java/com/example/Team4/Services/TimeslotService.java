@@ -49,7 +49,9 @@ public class TimeslotService {
                         elem.getMonth() == timeslotDto.getMonth()
                         && elem.getYear() == timeslotDto.getYear()) {
                     freeTimeslot.add(elem);
-                }
+                }else
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Not Availiable");
+
             }
         }
         return freeTimeslot;

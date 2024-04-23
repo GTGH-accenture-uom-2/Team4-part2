@@ -17,9 +17,10 @@ public class InsuredService {
     }
     public Insured findByAmka(long amka){
         for (var elem: insureds){
-            if (elem.getAmka() == amka){
+            if (elem.getAmka() == amka)
                 return elem;
-            }
-        }return null;
+            else
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Insured not found");
+        }
     }
 }
