@@ -32,6 +32,9 @@ public class ReservationService {
     @Autowired
     private InsuredService insuredService;
 
+    @Autowired
+    private VaccinationCenterService vaccinationCenterService;
+
 
     public List<Reservation> addReservation(Reservation reservation) {
         reservations.add(reservation);
