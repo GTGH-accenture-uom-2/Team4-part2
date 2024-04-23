@@ -36,7 +36,16 @@ public class VaccinationService {
     }
 
     public  Vaccination vaccinationDeclarations(String timeslotCode, Long insuredAmka, String expirDate,Long doctorAmka) {
-        Optional<Insured> selectedInsured = insureds.stream().filter(x->x.getAmka().equals(insuredAmka)).findFirst();
+        Insured selectedInsured = null;
+        for(Insured insured: insureds)
+            if(insured.getAmka().equals(insuredAmka)) {
+                selectedInsured = insured;
+                break;
+            }
+        if(selectedInsured==null)
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Insured with amka: " + insuredAmka + " doesn't exist");
+
+
         Timeslot timeslot = null;
         Doctor doctor = null;
         boolean state1= false;
@@ -63,13 +72,14 @@ public class VaccinationService {
                 state3 = true;
             }
         }
-        if((state1||state2)&&(selectedInsured.isPresent())&&(state3)){
+                           //&&(selectedInsured.isPresent())
+        if((state1||state2)&&(state3)){
             String vaccDate = timeslot.getFormattedDate();
-            return  new Vaccination(selectedInsured.get(),doctor,vaccDate,expirDate);
-
+            return  new Vaccination(selectedInsured,doctor,vaccDate,expirDate);
+                                     //selectedInsured.get()
         } else if(state1==false||state2==false) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Insured with Timeslot code: " +timeslotCode + "doesnt exist");
+                    "Timeslot with code: " +timeslotCode + "doesnt exist");
         } else if (state3==false) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Doctor with amka : " +doctorAmka + "doesnt exist");
