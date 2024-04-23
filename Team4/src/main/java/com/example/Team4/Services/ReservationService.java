@@ -2,6 +2,7 @@ package com.example.Team4.Services;
 
 import com.example.Team4.Dtos.SelectReservationDTO;
 import com.example.Team4.Models.Doctor;
+import com.example.Team4.Models.Insured;
 import com.example.Team4.Models.Reservation;
 import com.example.Team4.Models.Timeslot;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,6 +142,8 @@ public class ReservationService {
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                 "Unexpected error occurred while processing the vaccination request");
     }
+
+
     /*δευτερη εκδοχη
     public void selectReservation(SelectReservationDTO selectReservationDTO) {
         Reservation newReservation = new Reservation(selectReservationDTO);

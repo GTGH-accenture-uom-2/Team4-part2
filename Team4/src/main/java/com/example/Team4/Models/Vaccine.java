@@ -18,6 +18,7 @@ public class Vaccine {
 
     }
 
+
     public String getName() {
         return name;
     }
