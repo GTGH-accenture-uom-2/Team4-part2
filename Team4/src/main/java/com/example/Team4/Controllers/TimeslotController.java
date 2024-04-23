@@ -25,12 +25,14 @@ public class TimeslotController {
     public List<Timeslot> getAllTimeslots() {
         return timeslotService.getAllTimeslots();
     }
-    @GetMapping()
+    /*@GetMapping()
     public List<Timeslot> searchTimeslots(@RequestParam int day,
                                           @RequestParam int month,
                                           @RequestParam int year){
         return timeslotService.searchTimeslots(day,month,year);
     }
+
+     */
 
 
     @GetMapping("/searchTimeslot")
