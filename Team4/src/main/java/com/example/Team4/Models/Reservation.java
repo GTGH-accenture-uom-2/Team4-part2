@@ -13,6 +13,7 @@ public class Reservation {
     public Reservation(Insured insured, Timeslot timeslot) {
         this.insured = insured;
         this.timeslot = timeslot;
+        this.doctor = timeslot.getDoctor();
     }
 
     public Reservation(SelectReservationDTO selectReservationDTO) {
