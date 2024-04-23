@@ -38,7 +38,7 @@ public class VaccinationController {
 
         String qrCodeData = vaccinationStatus + " Expiration Date: " + expirationDate;
 
-        BufferedImage qrCodeImage = generateQRCodeImage(qrCodeData,100,100);
+        BufferedImage qrCodeImage = generateQRCodeImage(qrCodeData,300,300);
         byte[] qrCodeBytes = convertImageToBytes(qrCodeImage);
 
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(qrCodeBytes);
