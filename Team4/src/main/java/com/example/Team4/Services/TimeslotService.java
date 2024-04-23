@@ -25,7 +25,7 @@ public class TimeslotService {
         return timeslots;
     }
 
-    public List<Timeslot> searchTimeslots(int day, int month, int year) {
+    /*public List<Timeslot> searchTimeslots(int day, int month, int year) {
         LocalDate day1 = LocalDate.of(year, month, day);
         List<Timeslot> notFreeTimeslots = new ArrayList<>();
         for (Timeslot timeslot : timeslots) {
@@ -37,6 +37,8 @@ public class TimeslotService {
         }
         return notFreeTimeslots;
     }
+
+     */
 
     public List<Timeslot> searchTimeslots(TimeslotDTO timeslotDto) {
         List<Timeslot> freeTimeslot = new ArrayList<>();
