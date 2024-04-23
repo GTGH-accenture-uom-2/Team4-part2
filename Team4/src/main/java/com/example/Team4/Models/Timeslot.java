@@ -11,7 +11,7 @@ public class Timeslot {
     private int endMinute;
     private Doctor doctor;
     private boolean isFree;
-    private String code;
+    private int code;
 
     public Timeslot(int day, int month, int year, int hour, int minutes, int startMinute,
                     int endMinute, Doctor doctor) {
@@ -24,8 +24,8 @@ public class Timeslot {
         this.startMinute = startMinute;
         this.endMinute = endMinute;
         this.doctor = doctor;
-        isFree = false;
-        code = Integer.toString(lastAssignedCode);
+        isFree = true;
+        code = lastAssignedCode;
     }
 
     public int getDay() {
@@ -100,17 +100,19 @@ public class Timeslot {
         isFree = free;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
     public String getFormattedDate() {
         return String.format("%02d/%02d/%d", day, month, year);
     }
+
+    public String toString(){return ""+code+isFree;}
 
 
 }

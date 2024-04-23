@@ -17,6 +17,11 @@ import java.util.List;
 public class ReservationController {
     @Autowired
     ReservationService reservationService;
+
+    @GetMapping()
+    public Reservation getReservation(){
+        return  reservationService.getReservation();
+    }
     @PostMapping()
     public List<Reservation> addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
@@ -42,10 +47,10 @@ public class ReservationController {
        return reservationService.getReservationsByDay(day);
     }
     @PutMapping("/ChangeReservation")
-    public Reservation changeReservation(@RequestParam Long amka,
-                                         @RequestParam String timeslotCode,
+    public Reservation changeReservation(@RequestParam Long insuredAmka,
+                                         @RequestParam Long timeslotCode,
                                          @RequestParam Long doctorAmka ){
-        return reservationService.changeReservation(amka,timeslotCode,doctorAmka);
+        return reservationService.changeReservation(insuredAmka,timeslotCode,doctorAmka);
 
     }
 

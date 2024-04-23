@@ -28,10 +28,15 @@ public class ReservationService {
     List<Timeslot> timeslots2;
 
     @Autowired
+    Reservation reservation;
+
+    @Autowired
     private InsuredService insuredService;
 
     @Autowired
     private VaccinationCenterService vaccinationCenterService;
+
+
 
 
     public List<Reservation> addReservation(Reservation reservation) {
@@ -89,14 +94,17 @@ public class ReservationService {
     }
 
 
-    public Reservation changeReservation(Long insuredAmka,String timeslotCode, Long doctorAmka) {
+    public Reservation changeReservation(Long insuredAmka,Long timeslotCode, Long doctorAmka) {
         String insuredAmkaStr = String.valueOf(insuredAmka);
+        System.out.println(insuredAmkaStr);
         String doctorAmkaStr = String.valueOf(doctorAmka);
+        System.out.println(doctorAmkaStr);
 
         if (!insuredAmkaStr.matches("\\d+") || !doctorAmkaStr.matches("\\d+")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Insured AMKA and Doctor AMKA must be numeric values.");
         }
+        System.out.println("I pass the numeric problems");
 
         Doctor validDoctor = doctors.stream()
                 .filter(dct -> doctorAmka.equals(dct.getAmka()))
@@ -104,20 +112,29 @@ public class ReservationService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Doctor with AMKA: " + doctorAmka + " does not exist"));
 
+        System.out.println("I find the doctor");
+
         List<Timeslot> concatTimeslotLists = Stream.concat(timeslots1.stream(), timeslots2.stream())
                 .collect(Collectors.toList());
 
+        System.out.println(concatTimeslotLists);
+        System.out.println(timeslotCode==3);
+        System.out.println(timeslotCode.getClass().getName());
         Timeslot newTimeslot = concatTimeslotLists.stream()
-                .filter(tmsl -> timeslotCode.equals(tmsl.getCode()) && tmsl.isFree())
+                .filter(tmsl -> (timeslotCode==(tmsl.getCode())) && tmsl.isFree())
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Timeslot with code: " + timeslotCode + " is full or does not exist"));
 
+        System.out.println("I find the timeslot");
+
         Reservation reservation = reservations.stream()
-                .filter(r -> insuredAmka.equals(r.getInsured().getAmka()))
+                .filter(r -> (insuredAmka==(r.getInsured().getAmka())))
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Insured with AMKA: " + insuredAmka + " does not exist"));
+
+        System.out.println("I find the insured");
 
         if (reservation.getInsured().getReservationChangeCount() >= 3) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't change the reservation more than 2 times.");
@@ -130,6 +147,8 @@ public class ReservationService {
         newTimeslot.setFree(false);
 
         return reservation;
+        //1. na kano add to reservation sto reservations
+        //exei error epeidi ta reservations einai adeia
     }
         /*String insuredAmkaStr = String.valueOf(insuredAmka);
         String doctorAmkaStr = String.valueOf(doctorAmka);
@@ -213,7 +232,11 @@ public class ReservationService {
         }
         return reservations;
     }
+
+    public Reservation getReservation() {
+        return reservation;
     }
+}
 
 
   
