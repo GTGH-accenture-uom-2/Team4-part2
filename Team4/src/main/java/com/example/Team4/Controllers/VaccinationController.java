@@ -47,9 +47,9 @@ public class VaccinationController {
     }
 
     @PostMapping("/declaration")
-    public Vaccination vaccinationDeclarations(@RequestParam String timeslotCode,
+    public Vaccination vaccinationDeclarations(@RequestParam Long timeslotCode,
                                                       @RequestParam Long insuredAmka,
-                                                      @RequestParam String expirDate,
+                                                      @RequestParam Long expirDate,
                                                @RequestParam Long doctorAmka,
                                                 @RequestParam String vaccineName){
         return vaccinationService.vaccinationDeclarations(timeslotCode,insuredAmka,doctorAmka,vaccineName);

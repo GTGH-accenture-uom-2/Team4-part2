@@ -37,7 +37,7 @@ public class VaccinationService {
         this.insureds = insureds;
     }
 
-    public  Vaccination vaccinationDeclarations(String timeslotCode, Long insuredAmka, Long doctorAmka, String vaccineName) {
+    public  Vaccination vaccinationDeclarations(Long timeslotCode, Long insuredAmka, Long doctorAmka, String vaccineName) {
         Insured selectedInsured = null;
         for(Insured insured: insureds)
             if(insured.getAmka().equals(insuredAmka)) {
@@ -54,14 +54,14 @@ public class VaccinationService {
         boolean state2=false;
         boolean state3= false;
         for(Timeslot tmslt:timeslots1){
-            if(tmslt.getCode().equals(timeslotCode)){
+            if(tmslt.getCode()==(timeslotCode)){
                 timeslot = tmslt;
                 state1=true;
                 break;
             }
         }
         for(Timeslot tmslt:timeslots2){
-            if(tmslt.getCode().equals(timeslotCode)){
+            if(tmslt.getCode()==(timeslotCode)){
                 timeslot = tmslt;
                 state2 = true;
                 break;
