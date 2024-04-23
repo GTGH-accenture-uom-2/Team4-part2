@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class VaccinationService {
 
-    static List<Vaccination> vaccinations = new ArrayList<>();
+    List<Vaccination> vaccinations = new ArrayList<>();
     Vaccination vaccination;
 
     @Autowired
@@ -27,6 +27,8 @@ public class VaccinationService {
 
     @Autowired
     List<Doctor> doctors;
+    @Autowired
+    Vaccine vaccine;
 
     List<Insured> insureds;
 
@@ -35,7 +37,7 @@ public class VaccinationService {
         this.insureds = insureds;
     }
 
-    public  Vaccination vaccinationDeclarations(String timeslotCode, Long insuredAmka, String expirDate,Long doctorAmka) {
+    public  Vaccination vaccinationDeclarations(String timeslotCode, Long insuredAmka, Long doctorAmka, String vaccineName) {
         Insured selectedInsured = null;
         for(Insured insured: insureds)
             if(insured.getAmka().equals(insuredAmka)) {
@@ -43,7 +45,7 @@ public class VaccinationService {
                 break;
             }
         if(selectedInsured==null)
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Insured with amka: " + insuredAmka + " doesn't exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with amka: " + insuredAmka + " doesn't exist");
 
 
         Timeslot timeslot = null;
@@ -73,9 +75,16 @@ public class VaccinationService {
             }
         }
 
+        Vaccine selectedVaccine=null;
+        if(vaccineName.equals(vaccine.getName()))
+            selectedVaccine = vaccine;
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Vaccine: " + vaccineName + " doesn't exist");
+
+        
+
         if((state1||state2)&&(state3)){
             String vaccDate = timeslot.getFormattedDate();
-            return  new Vaccination(selectedInsured,doctor,vaccDate,expirDate);
+            return  new Vaccination(selectedInsured,doctor,vaccDate,expirationDate,selectedVaccine);
         } else if(state1==false||state2==false) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Timeslot with code: " +timeslotCode + "doesnt exist");
