@@ -1,10 +1,7 @@
 package com.example.Team4.Services;
 
 import com.example.Team4.Dtos.SelectReservationDTO;
-import com.example.Team4.Models.Doctor;
-import com.example.Team4.Models.Insured;
-import com.example.Team4.Models.Reservation;
-import com.example.Team4.Models.Timeslot;
+import com.example.Team4.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -146,8 +143,7 @@ public class ReservationService {
                 "Unexpected error occurred while processing the vaccination request");
     }
 
- 56-make-reservation-ckeck-if-availiable
-    ppublic List<Reservation> selectReservation(SelectReservationDTO selectReservationDTO) {
+    public List<Reservation> selectReservation(SelectReservationDTO selectReservationDTO) {
         List<VaccinationCenter> vaccinationCenters = vaccinationCenterService.getAllVaccinationCenters();
         boolean flag= false;
         for (int i = 0; i < vaccinationCenters.size(); i++) {
