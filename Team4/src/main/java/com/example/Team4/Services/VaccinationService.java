@@ -72,7 +72,7 @@ public class VaccinationService {
                 state3 = true;
             }
         }
-                           
+
         if((state1||state2)&&(state3)){
             String vaccDate = timeslot.getFormattedDate();
             return  new Vaccination(selectedInsured,doctor,vaccDate,expirDate);
