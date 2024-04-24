@@ -95,6 +95,7 @@ public class ReservationService {
 
 
     public Reservation changeReservation(Long insuredAmka,Long timeslotCode, Long doctorAmka) {
+        reservations.add(reservation);
         String insuredAmkaStr = String.valueOf(insuredAmka);
         System.out.println(insuredAmkaStr);
         String doctorAmkaStr = String.valueOf(doctorAmka);
@@ -126,17 +127,17 @@ public class ReservationService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Timeslot with code: " + timeslotCode + " is full or does not exist"));
 
-        System.out.println("I find the timeslot");
+
 
         Reservation reservation = reservations.stream()
-                .filter(r -> (insuredAmka==(r.getInsured().getAmka())))
+                .filter(r -> (insuredAmka.equals(r.getInsured().getAmka())))
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Insured with AMKA: " + insuredAmka + " does not exist"));
 
         System.out.println("I find the insured");
 
-        if (reservation.getInsured().getReservationChangeCount() >= 3) {
+        if (reservation.getInsured().getReservationChangeCount() >= 2) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't change the reservation more than 2 times.");
         }
 
