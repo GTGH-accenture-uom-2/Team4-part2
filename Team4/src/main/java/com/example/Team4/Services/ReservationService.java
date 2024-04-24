@@ -102,26 +102,16 @@ public class ReservationService {
     }
 
 
-    public Reservation changeReservation(Long insuredAmka,Long timeslotCode) {
+    public ReservationDTO changeReservation(Long insuredAmka,Long timeslotCode) {
         reservations.add(reservation);
         String insuredAmkaStr = String.valueOf(insuredAmka);
         System.out.println(insuredAmkaStr);
-        //String doctorAmkaStr = String.valueOf(doctorAmka);
-        //System.out.println(doctorAmkaStr);
+
 
         if (!insuredAmkaStr.matches("\\d+")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Insured AMKA  must be numeric values.");
         }
-        System.out.println("I pass the numeric problems");
-
-        /*Doctor validDoctor = doctors.stream()
-                .filter(dct -> doctorAmka.equals(dct.getAmka()))
-                .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Doctor with AMKA: " + doctorAmka + " does not exist"));*/
-
-        System.out.println("I find the doctor");
 
         List<Timeslot> concatTimeslotLists = Stream.concat(timeslots1.stream(), timeslots2.stream())
                 .collect(Collectors.toList());
@@ -155,7 +145,20 @@ public class ReservationService {
         reservation.getInsured().addPlusOne();
         newTimeslot.setFree(false);
 
-        return reservation;
+        InsuredDTO insuredDtoObj = new InsuredDTO(reservation.getInsured().getName(),
+                reservation.getInsured().getSurname(),reservation.getInsured().getAmka(),
+                reservation.getInsured().getAfm(),reservation.getInsured().getBirthdate(),
+                reservation.getInsured().getEmail());
+        TimeslotDTO2 timeslotDtoTwoObj = new TimeslotDTO2(reservation.getTimeslot().getDay(),
+                reservation.getTimeslot().getMonth(),reservation.getTimeslot().getYear()
+                ,reservation.getTimeslot().getHour(),
+                reservation.getTimeslot().getMinutes());
+        DoctorDTO dctDto = new DoctorDTO(reservation.getDoctor().getName(),
+                reservation.getDoctor().getSurname(),reservation.getDoctor().getAmka());
+
+
+        return new ReservationDTO(insuredDtoObj,timeslotDtoTwoObj,dctDto);
+        //return reservation;
         //1. na kano add to reservation sto reservations
         //exei error epeidi ta reservations einai adeia
     }

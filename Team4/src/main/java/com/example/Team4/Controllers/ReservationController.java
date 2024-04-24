@@ -48,7 +48,7 @@ public class ReservationController {
        return reservationService.getReservationsByDay(day);
     }
     @PutMapping("/ChangeReservation")
-    public Reservation changeReservation(@RequestParam Long insuredAmka,
+    public ReservationDTO changeReservation(@RequestParam Long insuredAmka,
                                          @RequestParam Long timeslotCode){
         return reservationService.changeReservation(insuredAmka,timeslotCode);
 
