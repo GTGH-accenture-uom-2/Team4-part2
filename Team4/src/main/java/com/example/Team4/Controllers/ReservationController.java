@@ -1,5 +1,6 @@
 package com.example.Team4.Controllers;
 
+import com.example.Team4.Dtos.ReservationDTO;
 import com.example.Team4.Dtos.SelectReservationDTO;
 import com.example.Team4.Models.Doctor;
 import com.example.Team4.Models.Reservation;
@@ -31,7 +32,7 @@ public class ReservationController {
         return reservationService.getAllReservation();
     }
     @GetMapping("/upcoming")
-    public List<Reservation> getUpcomingReservations() {
+    public List<ReservationDTO> getUpcomingReservations() {
         return reservationService.getUpcomingReservation();
     }
     /*@GetMapping()
