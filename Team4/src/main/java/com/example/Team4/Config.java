@@ -111,12 +111,18 @@ public class Config {
     public Reservation reservation1() {
         return new Reservation(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"), timeslots1(doc1(), doc2()).get(0), doc1());
     }
-    /*@Bean
+    @Bean
     public Reservation reservation2(){
         return new Reservation(new Insured("Petyr", "Baelish", 128975L, "petyr@gmail.com", 673553L, "11/03/1935"),timeslots1(doc1(),doc2()).get(1),doc2());
     }
 
-     */
+    @Bean
+    public ArrayList<Reservation> reservations(){
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation1());
+        reservations.add(reservation2());
+        return reservations;
+    }
 
     @Bean
     public Vaccine vaccine1(){
