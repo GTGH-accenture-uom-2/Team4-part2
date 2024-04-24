@@ -44,7 +44,7 @@ public class ReservationController {
      */
 
     @GetMapping("/byday")
-    public List<Reservation> getReservationsByDay(@RequestParam int day) {
+    public List<ReservationDTO> getReservationsByDay(@RequestParam int day) {
        return reservationService.getReservationsByDay(day);
     }
     @PutMapping("/ChangeReservation")
