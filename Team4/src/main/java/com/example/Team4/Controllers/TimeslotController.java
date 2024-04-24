@@ -1,6 +1,7 @@
 package com.example.Team4.Controllers;
 
 import com.example.Team4.Dtos.TimeslotDTO;
+import com.example.Team4.Dtos.TimeslotDTO2;
 import com.example.Team4.Models.Timeslot;
 import com.example.Team4.Services.TimeslotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,11 @@ public class TimeslotController {
     }
 
     @GetMapping("/permonth")
-    public List<TimeslotDTO> searchTimeslotsByMonth(@RequestParam Integer month){
-        List<TimeslotDTO> timeslotDTOS = new ArrayList<TimeslotDTO>();
+    public List<TimeslotDTO2> searchTimeslotsByMonth(@RequestParam Integer month){
+        List<TimeslotDTO2> timeslotDTOS = new ArrayList<TimeslotDTO2>();
         for(Timeslot timeslot: timeslotService.getAllTimeslots()){
             if(timeslot.getMonth()==month)
-                timeslotDTOS.add(new TimeslotDTO(timeslot.getDay(),timeslot.getMonth(),timeslot.getYear(),
+                timeslotDTOS.add(new TimeslotDTO2(timeslot.getDay(),timeslot.getMonth(),timeslot.getYear(),
                         timeslot.getHour(),timeslot.getMinutes()));
         }
         return timeslotDTOS;

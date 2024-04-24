@@ -4,15 +4,8 @@ public class TimeslotDTO {
     private int day;
     private int month;
     private int year;
-    private int hour;
-    private int minutes;
 
-    public TimeslotDTO(int day, int month, int year, int hour, int minutes) {
-        this.day = day;
-        this.month = month;
-        this.year = year;
-        this.hour = hour;
-        this.minutes = minutes;
+
       
     public TimeslotDTO(int day, int month, int year) {
         this.day = day;
@@ -44,21 +37,6 @@ public class TimeslotDTO {
         this.year = year;
     }
 
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public int getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
-    }
 
     @Override
     public String toString() {
