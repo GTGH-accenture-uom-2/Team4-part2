@@ -55,7 +55,7 @@ public class ReservationService {
         List<ReservationDTO> upcomingReservations = new ArrayList<>();
         for (Reservation reservation : reservations) {
             InsuredDTO insuredObj = new InsuredDTO(reservation.getInsured().getName(), reservation.getInsured().getSurname(), reservation.getInsured().getAmka(),reservation.getInsured().getAfm(),reservation.getInsured().getBirthdate(),reservation.getInsured().getEmail());
-            TimeslotDTO timeslotObj = new TimeslotDTO(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getYear());
+            TimeslotDTO2 timeslotObj = new TimeslotDTO2(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getYear(),reservation.getTimeslot().getHour(),reservation.getTimeslot().getMinutes());
             DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(),reservation.getDoctor().getAmka());
             LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
             if (reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay))
@@ -85,14 +85,17 @@ public class ReservationService {
 
      */
 
-    public List<Reservation> getReservationsByDay(int day) {
+    public List<ReservationDTO> getReservationsByDay(int day) {
         LocalDate currentDate = LocalDate.now();
         LocalDate requestDate = currentDate.withDayOfMonth(day);
-        List<Reservation> ReservationByDay = new ArrayList<>();
+        List<ReservationDTO> ReservationByDay = new ArrayList<>();
         for (Reservation reservation : reservations) {
+            InsuredDTO insuredObj = new InsuredDTO(reservation.getInsured().getName(), reservation.getInsured().getSurname(), reservation.getInsured().getAmka(),reservation.getInsured().getAfm(),reservation.getInsured().getBirthdate(),reservation.getInsured().getEmail());
+            TimeslotDTO2 timeslotObj = new TimeslotDTO2(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getYear(),reservation.getTimeslot().getHour(),reservation.getTimeslot().getMinutes());
+            DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(),reservation.getDoctor().getAmka());
             LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
             if(reservationDate.equals(requestDate)) {
-                ReservationByDay.add(reservation);
+                ReservationByDay.add(new ReservationDTO(insuredObj,timeslotObj,doctorObj));
             }
         }
         return ReservationByDay;
