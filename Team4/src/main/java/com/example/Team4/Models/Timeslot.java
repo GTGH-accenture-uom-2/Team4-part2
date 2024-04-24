@@ -112,7 +112,7 @@ public class Timeslot {
         return String.format("%02d/%02d/%d", day, month, year);
     }
 
-    public String toString(){return ""+code+isFree;}
+    
 
 
 }
