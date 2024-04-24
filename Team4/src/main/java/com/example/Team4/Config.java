@@ -56,7 +56,7 @@ public class Config {
     @Bean
     public ArrayList<Timeslot> timeslots1(Doctor doc1,Doctor doc2){
         ArrayList<Timeslot> timeslots1 = new ArrayList<>();
-        timeslots1.add(new Timeslot(10, 4, 2024, 9, 0, 9, 30, doc1));
+        timeslots1.add(new Timeslot(10, 6, 2024, 9, 0, 9, 30, doc1));
         timeslots1.add(new Timeslot(10, 4, 2024, 10, 0, 10, 30, doc2));
         timeslots1.add(new Timeslot(10, 4, 2024, 11, 0, 9, 30, doc1));
         timeslots1.add(new Timeslot(10, 4, 2024, 12, 0, 10, 30, doc2));
@@ -112,7 +112,7 @@ public class Config {
         return new Reservation(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"), timeslots1(doc1(), doc2()).get(0), doc1());
     }
     @Bean
-    public Reservation reservation2(){
+    public Reservation reservation(){
         return new Reservation(new Insured("Petyr", "Baelish", 128975L, "petyr@gmail.com", 673553L, "11/03/1935"),timeslots1(doc1(),doc2()).get(1),doc2());
     }
 
@@ -120,7 +120,7 @@ public class Config {
     public ArrayList<Reservation> reservations(){
         ArrayList<Reservation> reservations = new ArrayList<>();
         reservations.add(reservation1());
-        reservations.add(reservation2());
+        reservations.add(reservation());
         return reservations;
     }
 
@@ -155,7 +155,7 @@ public class Config {
         return new Vaccination(new Insured("Cersei", "Lannister", 876328L, "cersei@gmail.com", 986309L, "1/4/1943"), doc1(), "12/10/2023","12/07/2024",vaccine1());
     }
     @Bean Vaccination vaccination2(){
-        return new Vaccination(new Insured("Tyrion", "Lannister", 7635234L, "tyrion@gmail.com", 926254L, "10/7/1970"), doc1(), "12/11/2023","12/08/2024",vaccine1());
+        return new Vaccination(new Insured("Tyrion", "Lannister", 7635234L, "tyrion@gmail.com", 926254L, "10/7/1970"), doc1(), "12/11/2022","12/08/2023",vaccine1());
     }
 
 
