@@ -5,6 +5,11 @@ public class TimeslotDTO {
     private int month;
     private int year;
 
+    public TimeslotDTO(int day, int month, int year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
 
     public int getDay() {
         return day;
