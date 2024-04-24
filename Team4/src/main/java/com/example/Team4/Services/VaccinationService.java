@@ -1,5 +1,9 @@
 package com.example.Team4.Services;
 
+import com.example.Team4.Dtos.DoctorDTO;
+import com.example.Team4.Dtos.InsuredDTO;
+import com.example.Team4.Dtos.VaccinationDTO;
+import com.example.Team4.Dtos.VaccineDTO;
 import com.example.Team4.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -41,7 +45,7 @@ public class VaccinationService {
         this.insureds = insureds;
     }
 
-    public  Vaccination vaccinationDeclarations(Long timeslotCode, Long insuredAmka, Long doctorAmka, String vaccineName) {
+    public  VaccinationDTO vaccinationDeclarations(Long timeslotCode, Long insuredAmka, String vaccineName) {
         Insured selectedInsured = null;
         for(Insured insured: insureds)
             if(insured.getAmka().equals(insuredAmka)) {
@@ -53,31 +57,24 @@ public class VaccinationService {
 
 
         Timeslot timeslot = null;
-        Doctor doctor = null;
-        boolean state1= false;
-        boolean state2=false;
-        boolean state3= false;
         for(Timeslot tmslt:timeslots1){
             if(tmslt.getCode()==(timeslotCode)){
                 timeslot = tmslt;
-                state1=true;
-                break;
-            }
-        }
-        for(Timeslot tmslt:timeslots2){
-            if(tmslt.getCode()==(timeslotCode)){
-                timeslot = tmslt;
-                state2 = true;
                 break;
             }
         }
 
-        for(Doctor dcr:doctors){
-            if(dcr.getAmka()==doctorAmka){
-                doctor = dcr;
-                state3 = true;
+        for(Timeslot tmslt:timeslots2){
+            if(tmslt.getCode()==(timeslotCode)){
+                timeslot = tmslt;
+                break;
             }
         }
+
+        if(timeslot==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with timeslotCode : " + timeslotCode + " doesn't exist");
+
+
         int addMonths = 0;
         Vaccine selectedVaccine=null;
         for(Vaccine vaccine: vaccines) {
@@ -90,28 +87,25 @@ public class VaccinationService {
         if(selectedVaccine==null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Vaccine: " + vaccineName + " doesn't exist");
 
-        
 
-        if((state1||state2)&&(state3)&&addMonths>0){
-            String vaccDate = timeslot.getFormattedDate();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate date = LocalDate.parse(vaccDate, formatter);
-            // Add months
-            LocalDate expirationDate = date.plusMonths(addMonths);
-            // Format the expiration date back to a string
-            String formattedExpirationDate = expirationDate.format(formatter);
-            return  new Vaccination(selectedInsured,doctor,vaccDate,formattedExpirationDate,selectedVaccine);
-        } else if(state1==false||state2==false) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Timeslot with code: " +timeslotCode + "doesnt exist");
-        } else if (state3==false) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Doctor with amka : " +doctorAmka + "doesnt exist");
-        }else{
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Unexpected error occurred while processing the vaccination request");
-        }
 
+
+        String vaccDate = timeslot.getFormattedDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date = LocalDate.parse(vaccDate, formatter);
+        // Add months
+        LocalDate expirationDate = date.plusMonths(addMonths);
+        // Format the expiration date back to a string
+        String formattedExpirationDate = expirationDate.format(formatter);
+        InsuredDTO insureDtoObj = new InsuredDTO(selectedInsured.getName(),selectedInsured.getSurname(),
+                selectedInsured.getAmka(),selectedInsured.getAfm(),selectedInsured.getBirthdate(),
+                selectedInsured.getEmail());
+        DoctorDTO doctordtoObj = new DoctorDTO(timeslot.getDoctor().getName(),
+                timeslot.getDoctor().getSurname(),timeslot.getDoctor().getAmka());
+
+        VaccineDTO vaccinedtoObj = new VaccineDTO(vaccineName);
+
+        return  new VaccinationDTO(insureDtoObj,doctordtoObj,vaccDate,formattedExpirationDate,vaccinedtoObj);
     }
 
     public List<Vaccination> addVaccination(Vaccination vaccination){
