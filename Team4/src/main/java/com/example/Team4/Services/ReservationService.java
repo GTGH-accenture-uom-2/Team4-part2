@@ -102,24 +102,24 @@ public class ReservationService {
     }
 
 
-    public Reservation changeReservation(Long insuredAmka,Long timeslotCode, Long doctorAmka) {
+    public Reservation changeReservation(Long insuredAmka,Long timeslotCode) {
         reservations.add(reservation);
         String insuredAmkaStr = String.valueOf(insuredAmka);
         System.out.println(insuredAmkaStr);
-        String doctorAmkaStr = String.valueOf(doctorAmka);
-        System.out.println(doctorAmkaStr);
+        //String doctorAmkaStr = String.valueOf(doctorAmka);
+        //System.out.println(doctorAmkaStr);
 
-        if (!insuredAmkaStr.matches("\\d+") || !doctorAmkaStr.matches("\\d+")) {
+        if (!insuredAmkaStr.matches("\\d+")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Insured AMKA and Doctor AMKA must be numeric values.");
+                    "Insured AMKA  must be numeric values.");
         }
         System.out.println("I pass the numeric problems");
 
-        Doctor validDoctor = doctors.stream()
+        /*Doctor validDoctor = doctors.stream()
                 .filter(dct -> doctorAmka.equals(dct.getAmka()))
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Doctor with AMKA: " + doctorAmka + " does not exist"));
+                        "Doctor with AMKA: " + doctorAmka + " does not exist"));*/
 
         System.out.println("I find the doctor");
 
@@ -151,7 +151,7 @@ public class ReservationService {
 
         reservation.getTimeslot().setFree(true);
         reservation.setTimeslot(newTimeslot);
-        reservation.setDoctor(validDoctor);
+        reservation.setDoctor(newTimeslot.getDoctor());
         reservation.getInsured().addPlusOne();
         newTimeslot.setFree(false);
 
@@ -252,9 +252,11 @@ public class ReservationService {
         return reservations;
     }
 
-    /*public Reservation getReservation() {
+
+
+    public Reservation getReservation() {
         return reservation;
-    }*/
+    }
 }
 
 

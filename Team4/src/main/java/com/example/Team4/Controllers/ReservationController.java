@@ -19,10 +19,10 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-    /*@GetMapping()
+    @GetMapping()
     public Reservation getReservation(){
         return  reservationService.getReservation();
-    }*/
+    }
     @PostMapping()
     public List<Reservation> addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
@@ -49,9 +49,8 @@ public class ReservationController {
     }
     @PutMapping("/ChangeReservation")
     public Reservation changeReservation(@RequestParam Long insuredAmka,
-                                         @RequestParam Long timeslotCode,
-                                         @RequestParam Long doctorAmka ){
-        return reservationService.changeReservation(insuredAmka,timeslotCode,doctorAmka);
+                                         @RequestParam Long timeslotCode){
+        return reservationService.changeReservation(insuredAmka,timeslotCode);
 
     }
 
