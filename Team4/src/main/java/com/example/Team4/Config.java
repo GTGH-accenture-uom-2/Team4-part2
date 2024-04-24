@@ -38,7 +38,7 @@ public class Config {
     @Bean
     public List<Insured> insureds(){
         List<Insured> insureds = new ArrayList<>();
-        insureds.add();
+        //insureds.add();
         insureds.add(new Insured("Lord", "Varys", 373598L, "lord@gmail.com", 846338L, "17/03/1972"));
         insureds.add(new Insured("Theon", "Greyjoy", 83635L, "theon@gmail.com", 83625L, "7/08/1945"));
         insureds.add(new Insured("Sandor", "Clegane", 823627L, "sandor@gmail.com", 927156L, "5/12/1988"));
@@ -111,10 +111,12 @@ public class Config {
     public Reservation reservation1(){
         return new Reservation(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"),timeslots1(doc1(),doc2()).get(0),doc1());
     }
-    @Bean
+    /*@Bean
     public Reservation reservation2(){
         return new Reservation(new Insured("Petyr", "Baelish", 128975L, "petyr@gmail.com", 673553L, "11/03/1935"),timeslots1(doc1(),doc2()).get(1),doc2());
     }
+
+     */
 
     @Bean
     public Vaccine vaccine1(){
