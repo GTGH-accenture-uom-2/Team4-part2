@@ -16,8 +16,12 @@ import java.util.Optional;
 @Service
 public class VaccinationService {
 
-    List<Vaccination> vaccinations = new ArrayList<>();
-    Vaccination vaccination;
+    private final List<Vaccination> vaccinations;
+
+    @Autowired
+    public VaccinationService(List<Vaccination> vaccinations) {
+        this.vaccinations = vaccinations;
+    }
 
     @Autowired
     List<Timeslot> timeslots1;
@@ -116,12 +120,12 @@ public class VaccinationService {
     }
 
     public String getExpirationDate(Long amka){
-        if(!vaccination.getInsured().getAmka().equals(amka)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Insured with amka: " +amka + "doesnt exist");
+        for(Vaccination vaccination: vaccinations) {
+            if (vaccination.getInsured().getAmka().equals(amka))
+                return vaccination.getExpirationDate();
         }
-
-        return vaccination.getExpirationDate();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Insured with amka: " + amka + " is not vaccinated");
     }
 
     public String printVaccinationStatus(String expirationDate){
@@ -132,7 +136,7 @@ public class VaccinationService {
         if(currentDate.isAfter(expirationDateFormat))
             return "Your vaccination has expired!";
         else
-            return "You have an active vaccination until: " +expirationDate;
+            return "You have an active vaccination ";
     }
 
 

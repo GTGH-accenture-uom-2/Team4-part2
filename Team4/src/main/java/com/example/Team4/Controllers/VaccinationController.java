@@ -6,6 +6,7 @@ import com.example.Team4.Models.Vaccine;
 import com.example.Team4.Services.VaccinationService;
 import com.example.Team4.Util.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,25 +25,24 @@ public class VaccinationController {
     VaccinationService vaccinationService;
 
 
-    /*
-    @GetMapping("/status")
-    public String showVaccinationStatus (@RequestParam Long amka){
-        return vaccinationService.printVaccinationStatus(vaccinationService.getExpirationDate(amka));
-    }
-
-     */
-
-    @GetMapping(value="/status", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value="/status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> showVaccinationStatusWithQRCode(@RequestParam Long amka) throws Exception {
-        String expirationDate = vaccinationService.getExpirationDate(amka);
-        String vaccinationStatus = vaccinationService.printVaccinationStatus(expirationDate);
+        try {
+            String expirationDate = vaccinationService.getExpirationDate(amka);
+            String vaccinationStatus = vaccinationService.printVaccinationStatus(expirationDate);
 
-        String qrCodeData = vaccinationStatus + " Expiration Date: " + expirationDate;
+            String qrCodeData = vaccinationStatus + " Expiration Date: " + expirationDate;
 
-        BufferedImage qrCodeImage = generateQRCodeImage(qrCodeData,300,300);
-        byte[] qrCodeBytes = convertImageToBytes(qrCodeImage);
+            BufferedImage qrCodeImage = QRCodeGenerator.generateQRCodeImage(qrCodeData, 300, 300);
+            byte[] qrCodeBytes = QRCodeGenerator.convertImageToBytes(qrCodeImage);
 
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(qrCodeBytes);
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(qrCodeBytes);
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while generating QR code. Please try again later.Try to give another AMKA".getBytes());
+        }
+
+
 
     }
 

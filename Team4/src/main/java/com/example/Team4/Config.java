@@ -47,7 +47,6 @@ public class Config {
         insureds.add(new Insured("Sansa", "Stark", 6535978L, "sansa@gmail.com", 787530L, "8/11/2011"));
         insureds.add(new Insured("Jon", "Snow", 898674L, "jon@gmail.com", 876430L, "18/4/1980"));
         insureds.add(new Insured("Daenerys", "Targaryen", 875643L, "daeneys@gmail.com", 998764L, "1/5/1989"));
-        insureds.add(new Insured("Tyrion", "Lannister", 7635234L, "tyrion@gmail.com", 926254L, "10/7/1970"));
 
         return insureds;
     }
@@ -110,7 +109,7 @@ public class Config {
 
     @Bean
     public Reservation reservation(){
-        return new Reservation(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"),timeslots1(doc1(),doc2()).get(0),doc1());
+        return new Reservation(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"),timeslots1(doc1(),doc2()).get(1),doc1());
     }
 
     @Bean
@@ -140,8 +139,11 @@ public class Config {
         return vaccines;
     }
 
-    @Bean Vaccination vaccination(){
+    @Bean Vaccination vaccination1(){
         return new Vaccination(new Insured("Cersei", "Lannister", 876328L, "cersei@gmail.com", 986309L, "1/4/1943"), doc1(), "12/10/2023","12/07/2024",vaccine1());
+    }
+    @Bean Vaccination vaccination2(){
+        return new Vaccination(new Insured("Tyrion", "Lannister", 7635234L, "tyrion@gmail.com", 926254L, "10/7/1970"), doc1(), "12/11/2023","12/08/2024",vaccine1());
     }
 
 
