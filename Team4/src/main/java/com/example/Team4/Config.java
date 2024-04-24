@@ -108,8 +108,8 @@ public class Config {
     }
 
     @Bean
-    public Reservation reservation1(){
-        return new Reservation(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"),timeslots1(doc1(),doc2()).get(0),doc1());
+    public Reservation reservation1() {
+        return new Reservation(new Insured("Ned", "Stark", 875318L, "ned@gmail.com", 986752L, "19/9/1969"), timeslots1(doc1(), doc2()).get(0), doc1());
     }
     /*@Bean
     public Reservation reservation2(){

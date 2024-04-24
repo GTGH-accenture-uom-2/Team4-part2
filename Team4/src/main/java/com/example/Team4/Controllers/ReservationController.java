@@ -1,5 +1,6 @@
 package com.example.Team4.Controllers;
 
+import com.example.Team4.Dtos.ReservationDTO;
 import com.example.Team4.Dtos.SelectReservationDTO;
 import com.example.Team4.Models.Doctor;
 import com.example.Team4.Models.Reservation;
@@ -18,10 +19,10 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-    @GetMapping()
+    /*@GetMapping()
     public Reservation getReservation(){
         return  reservationService.getReservation();
-    }
+    }*/
     @PostMapping()
     public List<Reservation> addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
@@ -31,7 +32,7 @@ public class ReservationController {
         return reservationService.getAllReservation();
     }
     @GetMapping("/upcoming")
-    public List<Reservation> getUpcomingReservations() {
+    public List<ReservationDTO> getUpcomingReservations() {
         return reservationService.getUpcomingReservation();
     }
     /*@GetMapping()
@@ -54,9 +55,9 @@ public class ReservationController {
 
     }
 
-    @PutMapping("/selectReservation")
-    public void selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
-        reservationService.selectReservation(selectReservationDTO);
+    @PostMapping("/selectReservation")
+    public List<Reservation> selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
+        return reservationService.selectReservation(selectReservationDTO);
     }
 
 }

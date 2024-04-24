@@ -1,5 +1,6 @@
 package com.example.Team4.Dtos;
 
+import com.example.Team4.Models.Insured;
 import com.example.Team4.Models.Person;
 
 public class InsuredDTO extends Person {

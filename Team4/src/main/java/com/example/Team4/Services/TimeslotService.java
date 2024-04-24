@@ -73,5 +73,19 @@ public class TimeslotService {
         return freeTimeslot;
     }
 
+    public List<Timeslot> getTimeslots1() {
+        return timeslots1;
+    }
 
+    public void setTimeslots1(List<Timeslot> timeslots1) {
+        this.timeslots1 = timeslots1;
+    }
+
+    public List<Timeslot> getTimeslots2() {
+        return timeslots2;
+    }
+
+    public void setTimeslots2(List<Timeslot> timeslots2) {
+        this.timeslots2 = timeslots2;
+    }
 }

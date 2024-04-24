@@ -13,6 +13,11 @@ public class TimeslotDTO {
         this.year = year;
         this.hour = hour;
         this.minutes = minutes;
+      
+    public TimeslotDTO(int day, int month, int year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
 
     public int getDay() {

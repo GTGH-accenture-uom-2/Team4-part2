@@ -1,5 +1,7 @@
 package com.example.Team4.Dtos;
 
+import com.example.Team4.Models.Reservation;
+
 public class ReservationDTO {
 
     private InsuredDTO insuredDTO;

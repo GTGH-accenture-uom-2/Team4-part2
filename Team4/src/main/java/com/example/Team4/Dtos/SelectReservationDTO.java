@@ -3,7 +3,8 @@ package com.example.Team4.Dtos;
 import com.example.Team4.Models.Doctor;
 import com.example.Team4.Models.Timeslot;
 
-public class SelectReservationDTO {private Long amka;
+public class SelectReservationDTO {
+    private Long amka;
     private Timeslot timeslot;
     private Doctor doctor;
 
