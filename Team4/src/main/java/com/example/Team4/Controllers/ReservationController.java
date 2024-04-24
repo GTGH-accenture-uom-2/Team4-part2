@@ -18,10 +18,10 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-    @GetMapping()
+    /*@GetMapping()
     public Reservation getReservation(){
         return  reservationService.getReservation();
-    }
+    }*/
     @PostMapping()
     public List<Reservation> addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
@@ -54,9 +54,9 @@ public class ReservationController {
 
     }
 
-    @PutMapping("/selectReservation")
-    public void selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
-        reservationService.selectReservation(selectReservationDTO);
+    @PostMapping("/selectReservation")
+    public List<Reservation> selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
+        return reservationService.selectReservation(selectReservationDTO);
     }
 
 }
