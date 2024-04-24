@@ -14,9 +14,14 @@ import java.util.List;
 
 @Service
 public class TimeslotService {
-    List<Timeslot> timeslots = new ArrayList<>();
+    List<Timeslot> timeslots = new ArrayList<>();//xreiazetai??
     @Autowired
     private VaccinationCenterService vaccinationCenterService;
+    @Autowired
+    List<Timeslot> timeslots1;
+    @Autowired
+    List<Timeslot> timeslots2;
+
 
     public List<Timeslot> addTimeslot(Timeslot timeslot) {
         timeslots.add(timeslot);
@@ -44,17 +49,26 @@ public class TimeslotService {
 
     public List<Timeslot> searchTimeslots(TimeslotDTO timeslotDto) {
         List<Timeslot> freeTimeslot = new ArrayList<>();
-            for (var i=0; i<= timeslots.size(); i++){
-                if (timeslots.get(i).isFree() &&
-                        timeslots.get(i).getDay() == timeslotDto.getDay() &&
-                        timeslots.get(i).getMonth() == timeslotDto.getMonth()
-                        && timeslots.get(i).getYear() == timeslotDto.getYear()) {
-                    freeTimeslot.add(timeslots.get(i));
-                }
-                if (!freeTimeslot.isEmpty())
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Not Available");
+        for (Timeslot timeslot : timeslots1) {
+            if (timeslot.isFree() &&
+                    timeslot.getDay() == timeslotDto.getDay() &&
+                    timeslot.getMonth() == timeslotDto.getMonth() &&
+                    timeslot.getYear() == timeslotDto.getYear()) {
+                freeTimeslot.add(timeslot);
             }
 
+        }
+        for (Timeslot timeslot : timeslots2) {
+            if (timeslot.isFree() &&
+                    timeslot.getDay() == timeslotDto.getDay() &&
+                    timeslot.getMonth() == timeslotDto.getMonth()
+                    && timeslot.getYear() == timeslotDto.getYear()) {
+                freeTimeslot.add(timeslot);
+            }
+
+        }
+        if (freeTimeslot.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Not Available");
         return freeTimeslot;
     }
 }
