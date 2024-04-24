@@ -41,14 +41,22 @@ public class TimeslotController {
 
     @GetMapping("/permonth")
     public List<TimeslotDTO2> searchTimeslotsByMonth(@RequestParam Integer month){
-        List<TimeslotDTO2> timeslotDTOS = new ArrayList<TimeslotDTO2>();
-        for(Timeslot timeslot: timeslotService.getAllTimeslots()){
-            if(timeslot.getMonth()==month)
-                timeslotDTOS.add(new TimeslotDTO2(timeslot.getDay(),timeslot.getMonth(),timeslot.getYear(),
-                        timeslot.getHour(),timeslot.getMinutes()));
+        List<TimeslotDTO2> timeslotDTOS = new ArrayList<>();
+        for(Timeslot timeslot: timeslotService.getTimeslots1()) {
+            if(timeslot.getMonth() == month) {
+                timeslotDTOS.add(new TimeslotDTO2(timeslot.getDay(), timeslot.getMonth(), timeslot.getYear(),
+                        timeslot.getHour(), timeslot.getMinutes()));
+            }
+        }
+        for(Timeslot timeslot: timeslotService.getTimeslots2()) {
+            if(timeslot.getMonth() == month) {
+                timeslotDTOS.add(new TimeslotDTO2(timeslot.getDay(), timeslot.getMonth(), timeslot.getYear(),
+                        timeslot.getHour(), timeslot.getMinutes()));
+            }
         }
         return timeslotDTOS;
     }
+
 }
 
 

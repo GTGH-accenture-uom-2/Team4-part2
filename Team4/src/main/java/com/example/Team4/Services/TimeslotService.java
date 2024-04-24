@@ -18,10 +18,14 @@ public class TimeslotService {
     List<Timeslot> timeslots = new ArrayList<>();//xreiazetai??
     @Autowired
     private VaccinationCenterService vaccinationCenterService;
+    private ArrayList<Timeslot> timeslots1;
+    private ArrayList<Timeslot> timeslots2;
+
     @Autowired
-    List<Timeslot> timeslots1;
-    @Autowired
-    List<Timeslot> timeslots2;
+    public TimeslotService(ArrayList<Timeslot> timeslots1, ArrayList<Timeslot> timeslots2) {
+        this.timeslots1 = timeslots1;
+        this.timeslots2 = timeslots2;
+    }
 
 
     public List<Timeslot> addTimeslot(Timeslot timeslot) {
@@ -78,7 +82,7 @@ public class TimeslotService {
     }
 
     public void setTimeslots1(List<Timeslot> timeslots1) {
-        this.timeslots1 = timeslots1;
+        this.timeslots1 = (ArrayList<Timeslot>) timeslots1;
     }
 
     public List<Timeslot> getTimeslots2() {
@@ -86,6 +90,6 @@ public class TimeslotService {
     }
 
     public void setTimeslots2(List<Timeslot> timeslots2) {
-        this.timeslots2 = timeslots2;
+        this.timeslots2 = (ArrayList<Timeslot>) timeslots2;
     }
 }
