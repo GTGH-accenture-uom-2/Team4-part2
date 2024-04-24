@@ -39,7 +39,7 @@ public class VaccinationController {
             return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(qrCodeBytes);
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred while generating QR code. Please try again later.Try to give another AMKA".getBytes());
+                    .body("An error occurred while generating QR code.Try to give another AMKA".getBytes());
         }
 
 

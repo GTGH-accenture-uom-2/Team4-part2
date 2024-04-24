@@ -1,7 +1,7 @@
 package com.example.Team4.Models;
 
 public class Timeslot {
-    private static int lastAssignedCode = 0;
+    private static long lastAssignedCode = 0;
     private int day;
     private int month;
     private int year;
@@ -11,7 +11,7 @@ public class Timeslot {
     private int endMinute;
     private Doctor doctor;
     private boolean isFree;
-    private int code;
+    private Long code;
 
     public Timeslot(int day, int month, int year, int hour, int minutes, int startMinute,
                     int endMinute, Doctor doctor) {
@@ -100,11 +100,11 @@ public class Timeslot {
         isFree = free;
     }
 
-    public int getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
