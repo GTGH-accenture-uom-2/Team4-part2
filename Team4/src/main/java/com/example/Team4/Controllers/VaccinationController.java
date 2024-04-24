@@ -1,5 +1,7 @@
 package com.example.Team4.Controllers;
 
+import com.example.Team4.Dtos.VaccinationDTO;
+import com.example.Team4.Dtos.VaccineDTO;
 import com.example.Team4.Models.Timeslot;
 import com.example.Team4.Models.Vaccination;
 import com.example.Team4.Models.Vaccine;
@@ -47,12 +49,10 @@ public class VaccinationController {
     }
 
     @PostMapping("/declaration")
-    public Vaccination vaccinationDeclarations(@RequestParam Long timeslotCode,
-                                                      @RequestParam Long insuredAmka,
-                                                      @RequestParam Long expirDate,
-                                               @RequestParam Long doctorAmka,
-                                                @RequestParam String vaccineName){
-        return vaccinationService.vaccinationDeclarations(timeslotCode,insuredAmka,doctorAmka,vaccineName);
+    public VaccinationDTO vaccinationDeclarations(@RequestParam Long timeslotCode,
+                                                  @RequestParam Long insuredAmka,
+                                                  @RequestParam String vaccineName){
+        return vaccinationService.vaccinationDeclarations(timeslotCode,insuredAmka,vaccineName);
     }
 
 
