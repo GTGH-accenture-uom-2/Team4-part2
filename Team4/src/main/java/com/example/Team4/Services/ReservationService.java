@@ -27,8 +27,8 @@ public class ReservationService {
     @Autowired
     List<Timeslot> timeslots2;
 
-    /*@Autowired
-    Reservation reservation;*/
+    @Autowired
+    Reservation reservation;
 
     @Autowired
     private InsuredService insuredService;
