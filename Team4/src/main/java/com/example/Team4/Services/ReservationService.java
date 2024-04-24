@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 @Service
 public class ReservationService {
-    List<Reservation> reservations = new ArrayList<>();
+    //List<Reservation> reservations = new ArrayList<>();
     @Autowired
     List<Doctor> doctors;
     @Autowired
@@ -29,6 +29,9 @@ public class ReservationService {
 
     @Autowired
     Reservation reservation;
+
+    @Autowired
+    private List<Reservation> reservations;
 
     @Autowired
     private InsuredService insuredService;
