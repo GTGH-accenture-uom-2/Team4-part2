@@ -12,6 +12,7 @@ import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,8 +28,8 @@ public class ReservationService {
     @Autowired
     List<Timeslot> timeslots2;
 
-    @Autowired
-    Reservation reservation;
+    /*@Autowired
+    Reservation reservation;*/
 
     @Autowired
     private InsuredService insuredService;
@@ -36,8 +37,8 @@ public class ReservationService {
     @Autowired
     private VaccinationCenterService vaccinationCenterService;
 
-
-
+    @Autowired
+    private TimeslotService timeslotService;
 
     public List<Reservation> addReservation(Reservation reservation) {
         reservations.add(reservation);
@@ -208,16 +209,25 @@ public class ReservationService {
     
 
     public List<Reservation> selectReservation(SelectReservationDTO selectReservationDTO) {
-        List<VaccinationCenter> vaccinationCenters = vaccinationCenterService.getAllVaccinationCenters();
         boolean flag= false;
-        for (int i = 0; i < vaccinationCenters.size(); i++) {
-            for (var elem : vaccinationCenters.get(i).getTimeslots()) {
-                if (elem.isFree() && elem.getDay() == selectReservationDTO.getTimeslot().getDay() &&
-                        elem.getMonth() == selectReservationDTO.getTimeslot().getMonth()
-                        && elem.getYear() == selectReservationDTO.getTimeslot().getYear() &&
-                        selectReservationDTO.getDoctor().getAmka() == elem.getDoctor().getAmka()) {
-                    flag = true;
-                }
+        for (Timeslot tmsl : timeslotService.getTimeslots1()) {
+            if (tmsl.isFree() && tmsl.getDay() == selectReservationDTO.getTimeslot().getDay() &&
+                    tmsl.getMonth() == selectReservationDTO.getTimeslot().getMonth()
+                    && tmsl.getYear() == selectReservationDTO.getTimeslot().getYear() &&
+                    Objects.equals(selectReservationDTO.getDoctor().getName(), tmsl.getDoctor().getName())) {
+                flag = true;
+                tmsl.setFree(false);
+            }
+        }
+        for (Timeslot tmsl : timeslotService.getTimeslots2()) {
+            if (tmsl.isFree() && tmsl.getDay() == selectReservationDTO.getTimeslot().getDay() &&
+                    tmsl.getMonth() == selectReservationDTO.getTimeslot().getMonth()
+                    && tmsl.getYear() == selectReservationDTO.getTimeslot().getYear() &&
+                    Objects.equals(selectReservationDTO.getDoctor().getName(), tmsl.getDoctor().getName())
+                    )
+            {
+                flag = true;
+                tmsl.setFree(false);
             }
         }
         if (flag) {
@@ -225,17 +235,18 @@ public class ReservationService {
             if (newinsured == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, wrong amka");
             }
-            Reservation newReservation = new Reservation(newinsured, selectReservationDTO.getTimeslot());
+            Reservation newReservation = new Reservation(newinsured, selectReservationDTO.getTimeslot(), selectReservationDTO.getDoctor());
             reservations.add(newReservation);
+
         }else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, not availiable reservation");
         }
         return reservations;
     }
 
-    public Reservation getReservation() {
+    /*public Reservation getReservation() {
         return reservation;
-    }
+    }*/
 }
 
 

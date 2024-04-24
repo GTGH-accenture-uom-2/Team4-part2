@@ -1,6 +1,7 @@
 package com.example.Team4.Services;
 
 import com.example.Team4.Models.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,8 +12,9 @@ import java.util.List;
 @Service
 public class InsuredService {
 
-    List<Insured> insureds = new ArrayList<>();
-
+    //List<Insured> insureds = new ArrayList<>();
+    @Autowired
+    List<Insured> insureds;
     public List<Insured> addInsured(Insured insured){
         insureds.add(insured);
         return insureds;
@@ -26,5 +28,9 @@ public class InsuredService {
         }
 
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error, Insured not found");
-}
+    }
+
+    public List<Insured> getInsureds() {
+        return insureds;
+    }
 }
