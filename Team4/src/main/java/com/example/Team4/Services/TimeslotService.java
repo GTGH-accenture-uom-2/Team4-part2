@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeslotService {
@@ -71,4 +72,6 @@ public class TimeslotService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Not Available");
         return freeTimeslot;
     }
+
+
 }
