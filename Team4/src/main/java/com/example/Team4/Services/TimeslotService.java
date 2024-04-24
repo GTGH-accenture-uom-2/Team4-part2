@@ -44,18 +44,17 @@ public class TimeslotService {
 
     public List<Timeslot> searchTimeslots(TimeslotDTO timeslotDto) {
         List<Timeslot> freeTimeslot = new ArrayList<>();
-        List<VaccinationCenter> vaccinationCenters = vaccinationCenterService.getAllVaccinationCenters();
-        for(int i=0;i<vaccinationCenters.size();i++) {
-            for (var elem : vaccinationCenters.get(i).getTimeslots()) {
-                if (elem.isFree() && elem.getDay() == timeslotDto.getDay() &&
-                        elem.getMonth() == timeslotDto.getMonth()
-                        && elem.getYear() == timeslotDto.getYear()) {
-                    freeTimeslot.add(elem);
-                }else
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Not Availiable");
-
+            for (var i=0; i<= timeslots.size(); i++){
+                if (timeslots.get(i).isFree() &&
+                        timeslots.get(i).getDay() == timeslotDto.getDay() &&
+                        timeslots.get(i).getMonth() == timeslotDto.getMonth()
+                        && timeslots.get(i).getYear() == timeslotDto.getYear()) {
+                    freeTimeslot.add(timeslots.get(i));
+                }
+                if (!freeTimeslot.isEmpty())
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Not Available");
             }
-        }
+
         return freeTimeslot;
     }
 }
