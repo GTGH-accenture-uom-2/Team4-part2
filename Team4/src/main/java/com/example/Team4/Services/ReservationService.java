@@ -52,7 +52,6 @@ public class ReservationService {
     }
 
     public List<ReservationDTO> getUpcomingReservation() {
-        reservations.add(reservation);
         LocalDate currentDay = LocalDate.now();
 
         List<ReservationDTO> upcomingReservations = new ArrayList<>();
