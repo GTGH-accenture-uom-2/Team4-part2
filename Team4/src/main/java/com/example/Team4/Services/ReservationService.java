@@ -93,7 +93,7 @@ public class ReservationService {
 
 
     public ReservationDTO changeReservation(Long insuredAmka,Long timeslotCode) {
-        reservations.add(reservation);
+        
         String insuredAmkaStr = String.valueOf(insuredAmka);
 
         if (!(insuredAmkaStr.matches("\\d+"))) {
