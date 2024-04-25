@@ -155,7 +155,8 @@ public class ReservationService {
             if (tmsl.isFree() && tmsl.getDay() == selectReservationDTO.getTimeslot().getDay() &&
                     tmsl.getMonth() == selectReservationDTO.getTimeslot().getMonth()
                     && tmsl.getYear() == selectReservationDTO.getTimeslot().getYear() &&
-                    Objects.equals(selectReservationDTO.getDoctor().getAmka(), tmsl.getDoctor().getAmka())) {
+                    (selectReservationDTO.getDoctor().getAmka().equals(tmsl.getDoctor().getAmka())))
+                     {
                 flag = true;
                 tmsl.setFree(false);
             }
@@ -164,8 +165,7 @@ public class ReservationService {
             if (tmsl.isFree() && tmsl.getDay() == selectReservationDTO.getTimeslot().getDay() &&
                     tmsl.getMonth() == selectReservationDTO.getTimeslot().getMonth()
                     && tmsl.getYear() == selectReservationDTO.getTimeslot().getYear() &&
-                    Objects.equals(selectReservationDTO.getDoctor().getAmka(), tmsl.getDoctor().getAmka())
-                    )
+                    (selectReservationDTO.getDoctor().getAmka().equals(tmsl.getDoctor().getAmka())))
             {
                 flag = true;
                 tmsl.setFree(false);
