@@ -47,7 +47,6 @@ public class VaccinationService {
     }
 
     public  VaccinationDTO vaccinationDeclarations(Long timeslotCode, Long insuredAmka, String vaccineName) {
-        System.out.println("I AM HERE");
         Insured selectedInsured = null;
         for(Insured insured: insureds)
             if(insured.getAmka().equals(insuredAmka)) {
@@ -56,8 +55,6 @@ public class VaccinationService {
             }
         if(selectedInsured==null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with amka: " + insuredAmka + " doesn't exist");
-
-        System.out.println("I find insured");
 
         Timeslot timeslot = null;
         for(Timeslot tmslt:timeslots1){
@@ -77,7 +74,7 @@ public class VaccinationService {
         if(timeslot==null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with timeslotCode : " + timeslotCode + " doesn't exist");
 
-        System.out.println("timeslot");
+
 
         int addMonths = 0;
         Vaccine selectedVaccine=null;
@@ -91,8 +88,6 @@ public class VaccinationService {
         if(selectedVaccine==null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Vaccine: " + vaccineName + " doesn't exist");
 
-
-        System.out.println("selectedVaccine");
 
         String vaccDate = timeslot.getFormattedDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
