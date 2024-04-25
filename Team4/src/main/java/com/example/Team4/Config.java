@@ -57,7 +57,7 @@ public class Config {
     public ArrayList<Timeslot> timeslots1(Doctor doc1,Doctor doc2){
         ArrayList<Timeslot> timeslots1 = new ArrayList<>();
         timeslots1.add(new Timeslot(10, 6, 2024, 9, 0, 9, 30, doc1));
-        timeslots1.add(new Timeslot(10, 4, 2024, 10, 0, 10, 30, doc2));
+        timeslots1.add(new Timeslot(10, 6, 2024, 10, 0, 10, 30, doc2));
         timeslots1.add(new Timeslot(10, 4, 2024, 11, 0, 9, 30, doc1));
         timeslots1.add(new Timeslot(10, 4, 2024, 12, 0, 10, 30, doc2));
         timeslots1.add(new Timeslot(10, 4, 2024, 13, 0, 9, 30, doc1));

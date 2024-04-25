@@ -31,17 +31,17 @@ public class ReservationController {
     public List<Reservation> getAllReservations(){
         return reservationService.getAllReservation();
     }
+    //@GetMapping("/upcoming")
+    //public List<ReservationDTO> getUpcomingReservations() {
+        //return reservationService.getUpcomingReservation();
+    //}
     @GetMapping("/upcoming")
-    public List<ReservationDTO> getUpcomingReservations() {
-        return reservationService.getUpcomingReservation();
-    }
-    /*@GetMapping()
-    public List<Reservation> getUpcomingReservations(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+    public List<ReservationDTO> getUpcomingReservations(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
                                                      @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
         return reservationService.getUpcomingReservations(pageNo,pageSize);
     }
 
-     */
+
 
     @GetMapping("/byday")
     public List<ReservationDTO> getReservationsByDay(@RequestParam int day) {
