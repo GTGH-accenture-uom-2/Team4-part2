@@ -18,8 +18,14 @@ public class InsuredController {
     InsuredService insuredService;
 
     @PostMapping()
-    public List<Insured> addInsured(@RequestBody Insured insured) {
-        return insuredService.addInsured(insured);
+    public List<Insured> addInsured(@RequestParam String name,
+                                    @RequestParam String surname,
+                                    @RequestParam Long amka,
+                                    @RequestParam Long afm,
+                                    @RequestParam String birthdate,
+                                    @RequestParam String email) {
+        return insuredService.addInsured(name,surname,amka,afm,birthdate,email);
     }
+
 
 }
