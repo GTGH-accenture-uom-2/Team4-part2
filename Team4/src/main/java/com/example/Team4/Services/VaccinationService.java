@@ -38,6 +38,7 @@ public class VaccinationService {
     @Autowired
     List<Vaccine> vaccines;
 
+    @Autowired
     List<Insured> insureds;
 
     @Autowired
@@ -46,6 +47,7 @@ public class VaccinationService {
     }
 
     public  VaccinationDTO vaccinationDeclarations(Long timeslotCode, Long insuredAmka, String vaccineName) {
+        System.out.println("I AM HERE");
         Insured selectedInsured = null;
         for(Insured insured: insureds)
             if(insured.getAmka().equals(insuredAmka)) {
@@ -55,6 +57,7 @@ public class VaccinationService {
         if(selectedInsured==null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with amka: " + insuredAmka + " doesn't exist");
 
+        System.out.println("I find insured");
 
         Timeslot timeslot = null;
         for(Timeslot tmslt:timeslots1){
@@ -74,11 +77,15 @@ public class VaccinationService {
         if(timeslot==null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with timeslotCode : " + timeslotCode + " doesn't exist");
 
+        System.out.println("timeslot");
 
         int addMonths = 0;
         Vaccine selectedVaccine=null;
+        System.out.println(vaccineName);
         for(Vaccine vaccine: vaccines) {
-            if (vaccine.getName().equals(vaccineName)) {
+            System.out.println(vaccine.getName());
+            System.out.println((vaccine.getName()).compareTo(vaccineName));
+            if((vaccine.getName().equals(vaccineName))) {
                 selectedVaccine = vaccine;
                 addMonths = selectedVaccine.getMonthlyDuration();
                 break;
@@ -88,7 +95,7 @@ public class VaccinationService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Vaccine: " + vaccineName + " doesn't exist");
 
 
-
+        System.out.println("selectedVaccine");
 
         String vaccDate = timeslot.getFormattedDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
