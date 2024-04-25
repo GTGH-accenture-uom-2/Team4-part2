@@ -81,11 +81,8 @@ public class VaccinationService {
 
         int addMonths = 0;
         Vaccine selectedVaccine=null;
-        System.out.println(vaccineName);
         for(Vaccine vaccine: vaccines) {
-            System.out.println(vaccine.getName());
-            System.out.println((vaccine.getName()).compareTo(vaccineName));
-            if((vaccine.getName().equals(vaccineName))) {
+            if(((vaccine.getName()).equals(vaccineName))) {
                 selectedVaccine = vaccine;
                 addMonths = selectedVaccine.getMonthlyDuration();
                 break;
