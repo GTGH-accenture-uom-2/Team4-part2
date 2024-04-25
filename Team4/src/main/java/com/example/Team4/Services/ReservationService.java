@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 
 @Service
 public class ReservationService {
-    //List<Reservation> reservations = new ArrayList<>();
     @Autowired
     List<Doctor> doctors;
     @Autowired
@@ -76,31 +75,6 @@ public class ReservationService {
         return upcomingReservation;
     }
 
-    /*public List<ReservationDTO> getReservationsByDay(int day) {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate requestDate = currentDate.withDayOfMonth(day);
-        LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
-        List<ReservationDTO> reservationByDay = new ArrayList<>();
-        for (Reservation reservation : reservations) {
-            if (reservationDate.equals(requestDate)) {
-            InsuredDTO insuredObj = new InsuredDTO(reservation.getInsured().getName(), reservation.getInsured().getSurname(), reservation.getInsured().getAmka(), reservation.getInsured().getAfm(), reservation.getInsured().getBirthdate(), reservation.getInsured().getEmail());
-            TimeslotDTO2 timeslotObj = new TimeslotDTO2(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getYear(), reservation.getTimeslot().getHour(), reservation.getTimeslot().getMinutes());
-            DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(), reservation.getDoctor().getAmka());
-            //LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
-            if (reservationDate.equals(requestDate)) {
-                reservationByDay.add(new ReservationDTO(insuredObj, timeslotObj, doctorObj));
-            }
-
-            //if (reservationByDay.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No reservation today");
-
-            }
-        }
-
-        return reservationByDay;
-    }
-
-     */
     public List<ReservationDTO> getReservationsByDay(int day, int month, int year){
         List<ReservationDTO> reservationByDay = new ArrayList<>();
         LocalDate reservationDay = LocalDate.of(year,month,day);
@@ -173,66 +147,7 @@ public class ReservationService {
 
 
         return new ReservationDTO(insuredDtoObj,timeslotDtoTwoObj,dctDto);
-        //return reservation;
-        //1. na kano add to reservation sto reservations
-        //exei error epeidi ta reservations einai adeia
     }
-        /*String insuredAmkaStr = String.valueOf(insuredAmka);
-        String doctorAmkaStr = String.valueOf(doctorAmka);
-        if (!insuredAmkaStr.matches("\\d+") || !doctorAmkaStr.matches("\\d+")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Insured AMKA and Doctor AMKA must be numeric values.");
-        }
-
-        List<Timeslot> concatTimeslotLists = new ArrayList<>();
-        concatTimeslotLists.addAll(timeslots1);
-        concatTimeslotLists.addAll(timeslots2);
-        Doctor validDoctor = null;
-        Timeslot newTimeslot = null;
-        for(Doctor dct:doctors){
-            if(doctorAmka==dct.getAmka()){
-                validDoctor = dct;
-                break;
-            }else{
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Doctor with amka: " +doctorAmka + "doesnt exist");
-            }
-        }
-        for(Timeslot tmsl:concatTimeslotLists){
-            if(timeslotCode.equals(tmsl.getCode())){
-                if(tmsl.isFree()){
-                newTimeslot = tmsl;
-                break;} else {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Timeslot with code: " +timeslotCode + "is full");
-                }
-            }else{
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        " Timeslot with code: " +timeslotCode + "doesnt exist");
-            }
-        }
-        for(Reservation reservation:reservations){
-            if(insuredAmka==reservation.getInsured().getAmka()){
-                if(reservation.getInsured().getReservationChangeCount()<3){
-                    reservation.getTimeslot().setFree(true);
-                    reservation.setTimeslot(newTimeslot);
-                    reservation.setDoctor(validDoctor);
-                    reservation.getInsured().addPlusOne();
-                    reservation.getTimeslot().setFree(false);
-                    return reservation;
-                }
-                else{
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't change the reservation more than 2 times.");
-                }
-            }
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Insured with amka: " +insuredAmka + "doesnt exist");
-
-
-        }
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                "Unexpected error occurred while processing the vaccination request");*/
-    
 
     public List<Reservation> selectReservation(SelectReservationDTO selectReservationDTO) {
         boolean flag= false;
@@ -269,8 +184,6 @@ public class ReservationService {
         }
         return reservations;
     }
-
-
 
     public Reservation getReservation() {
         return reservation;
