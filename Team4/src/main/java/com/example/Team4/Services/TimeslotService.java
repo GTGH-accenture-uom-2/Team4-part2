@@ -1,6 +1,7 @@
 package com.example.Team4.Services;
 
 import com.example.Team4.Dtos.TimeslotDTO;
+import com.example.Team4.Models.Doctor;
 import com.example.Team4.Models.Timeslot;
 import com.example.Team4.Models.VaccinationCenter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ public class TimeslotService {
     List<Timeslot> timeslots = new ArrayList<>();//xreiazetai??
     @Autowired
     private VaccinationCenterService vaccinationCenterService;
+    @Autowired
     private ArrayList<Timeslot> timeslots1;
+    @Autowired
     private ArrayList<Timeslot> timeslots2;
 
     @Autowired
@@ -91,5 +94,29 @@ public class TimeslotService {
 
     public void setTimeslots2(List<Timeslot> timeslots2) {
         this.timeslots2 = (ArrayList<Timeslot>) timeslots2;
+    }
+
+    public List<Timeslot> getTimeslotsByDoctor(Doctor doctor) {
+        List<Timeslot> DocTimeslots = new ArrayList<>();
+        for (var elem : timeslots1) {
+            if (elem.getDay() == LocalDate.now().getDayOfMonth()
+                    && elem.getMonth() == LocalDate.now().getMonthValue()
+                    && elem.getYear() == LocalDate.now().getYear()
+                    && elem.getDoctor().getAmka() == doctor.getAmka()// erroooooooooooooooor
+                    && !elem.isFree()) {
+                DocTimeslots.add(elem);
+            }
+        }
+        for (var elem : timeslots2) {
+            if (elem.getDay() == LocalDate.now().getDayOfMonth()
+                    && elem.getMonth() == LocalDate.now().getMonthValue()
+                    && elem.getYear() == LocalDate.now().getYear()
+                    && elem.getDoctor().getAmka() == doctor.getAmka()
+                    && !elem.isFree()) {
+                DocTimeslots.add(elem);
+            }
+        }
+
+        return DocTimeslots;
     }
 }
