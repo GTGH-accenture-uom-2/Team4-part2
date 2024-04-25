@@ -57,8 +57,10 @@ public class ReservationService {
         int end = Math.min(start + pageSize, reservations.size());
 
         List<ReservationDTO> upcomingReservation = new ArrayList<>();
+        //System.out.println(reservations.size());
         for (int i = start; i < end; i++) {
             Reservation reservation = reservations.get(i);
+            //System.out.println(reservation.getInsured().getName());
             LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
 
             if (reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay)) {
