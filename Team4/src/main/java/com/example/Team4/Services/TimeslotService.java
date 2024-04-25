@@ -58,7 +58,7 @@ public class TimeslotService {
     public List<Timeslot> searchTimeslots(int day, int month, int year) {
         List<Timeslot> freeTimeslot = new ArrayList<>();
         for (Timeslot timeslot : timeslots1) {
-            if (timeslot.isFree() && timeslot.getDay() == day && timeslot.getMonth() == month && timeslot.getYear() == year) {
+            if (timeslot.isFree() && timeslot.getDay()==(day) && timeslot.getMonth() == month && timeslot.getYear() == year) {
                 freeTimeslot.add(timeslot);
             }
 
@@ -96,7 +96,7 @@ public class TimeslotService {
             if (elem.getDay() == LocalDate.now().getDayOfMonth()
                     && elem.getMonth() == LocalDate.now().getMonthValue()
                     && elem.getYear() == LocalDate.now().getYear()
-                    && elem.getDoctor().getAmka() == doctor.getAmka()// erroooooooooooooooor
+                    && elem.getDoctor().getAmka().equals(doctor.getAmka())// erroooooooooooooooor
                     && !elem.isFree()) {
                 DocTimeslots.add(elem);
             }
@@ -105,7 +105,7 @@ public class TimeslotService {
             if (elem.getDay() == LocalDate.now().getDayOfMonth()
                     && elem.getMonth() == LocalDate.now().getMonthValue()
                     && elem.getYear() == LocalDate.now().getYear()
-                    && elem.getDoctor().getAmka() == doctor.getAmka()
+                    && elem.getDoctor().getAmka().equals(doctor.getAmka())
                     && !elem.isFree()) {
                 DocTimeslots.add(elem);
             }
