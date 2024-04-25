@@ -15,10 +15,11 @@ public class InsuredService {
     //List<Insured> insureds = new ArrayList<>();
     @Autowired
     List<Insured> insureds;
-    public List<Insured> addInsured(Insured insured){
-        insureds.add(insured);
+    public List<Insured> addInsured(String name, String surname, Long amka, Long afm, String birthdate, String email){
+        insureds.add(new Insured(name,surname,amka,email,afm,birthdate));
         return insureds;
     }
+
     public Insured findByAmka(long amka){
         for (var elem: insureds){
             if (elem.getAmka() == amka)
