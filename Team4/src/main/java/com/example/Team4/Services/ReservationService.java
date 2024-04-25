@@ -79,17 +79,25 @@ public class ReservationService {
     public List<ReservationDTO> getReservationsByDay(int day) {
         LocalDate currentDate = LocalDate.now();
         LocalDate requestDate = currentDate.withDayOfMonth(day);
-        List<ReservationDTO> ReservationByDay = new ArrayList<>();
+        LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
+        List<ReservationDTO> reservationByDay = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            InsuredDTO insuredObj = new InsuredDTO(reservation.getInsured().getName(), reservation.getInsured().getSurname(), reservation.getInsured().getAmka(),reservation.getInsured().getAfm(),reservation.getInsured().getBirthdate(),reservation.getInsured().getEmail());
-            TimeslotDTO2 timeslotObj = new TimeslotDTO2(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getYear(),reservation.getTimeslot().getHour(),reservation.getTimeslot().getMinutes());
-            DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(),reservation.getDoctor().getAmka());
-            LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
-            if(reservationDate.equals(requestDate)) {
-                ReservationByDay.add(new ReservationDTO(insuredObj,timeslotObj,doctorObj));
+            if (reservationDate.equals(requestDate)) {
+            InsuredDTO insuredObj = new InsuredDTO(reservation.getInsured().getName(), reservation.getInsured().getSurname(), reservation.getInsured().getAmka(), reservation.getInsured().getAfm(), reservation.getInsured().getBirthdate(), reservation.getInsured().getEmail());
+            TimeslotDTO2 timeslotObj = new TimeslotDTO2(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getYear(), reservation.getTimeslot().getHour(), reservation.getTimeslot().getMinutes());
+            DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(), reservation.getDoctor().getAmka());
+            //LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
+            if (reservationDate.equals(requestDate)) {
+                reservationByDay.add(new ReservationDTO(insuredObj, timeslotObj, doctorObj));
+            }
+
+            //if (reservationByDay.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No reservation today");
+
             }
         }
-        return ReservationByDay;
+
+        return reservationByDay;
     }
 
 
