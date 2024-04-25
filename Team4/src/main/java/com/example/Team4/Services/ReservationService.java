@@ -57,10 +57,8 @@ public class ReservationService {
         int end = Math.min(start + pageSize, reservations.size());
 
         List<ReservationDTO> upcomingReservation = new ArrayList<>();
-        //System.out.println(reservations.size());
         for (int i = start; i < end; i++) {
             Reservation reservation = reservations.get(i);
-            //System.out.println(reservation.getInsured().getName());
             LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
 
             if (reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay)) {
@@ -88,6 +86,7 @@ public class ReservationService {
                 DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(), reservation.getDoctor().getAmka());
                 reservationByDay.add(new ReservationDTO(insuredObj,timeslotObj,doctorObj));
             }
+
         }
         return reservationByDay;
     }
@@ -96,10 +95,8 @@ public class ReservationService {
     public ReservationDTO changeReservation(Long insuredAmka,Long timeslotCode) {
         reservations.add(reservation);
         String insuredAmkaStr = String.valueOf(insuredAmka);
-        System.out.println(insuredAmkaStr);
 
-
-        if (!insuredAmkaStr.matches("\\d+")) {
+        if (!(insuredAmkaStr.matches("\\d+"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Insured AMKA  must be numeric values.");
         }
@@ -107,9 +104,6 @@ public class ReservationService {
         List<Timeslot> concatTimeslotLists = Stream.concat(timeslots1.stream(), timeslots2.stream())
                 .collect(Collectors.toList());
 
-        System.out.println(concatTimeslotLists);
-        System.out.println(timeslotCode==3);
-        System.out.println(timeslotCode.getClass().getName());
         Timeslot newTimeslot = concatTimeslotLists.stream()
                 .filter(tmsl -> (timeslotCode==(tmsl.getCode())) && tmsl.isFree())
                 .findFirst()
@@ -123,8 +117,6 @@ public class ReservationService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Insured with AMKA: " + insuredAmka + " does not exist"));
-
-        System.out.println("I find the insured");
 
         if (reservation.getInsured().getReservationChangeCount() >= 2) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't change the reservation more than 2 times.");
