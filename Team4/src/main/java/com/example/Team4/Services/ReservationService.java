@@ -151,12 +151,12 @@ public class ReservationService {
 
     public List<Reservation> selectReservation(SelectReservationDTO selectReservationDTO) {
         boolean flag= false;
+        List <Reservation> newReservations = new ArrayList<Reservation>();
         for (Timeslot tmsl : timeslotService.getTimeslots1()) {
             if (tmsl.isFree() && tmsl.getDay() == selectReservationDTO.getTimeslot().getDay() &&
                     tmsl.getMonth() == selectReservationDTO.getTimeslot().getMonth()
                     && tmsl.getYear() == selectReservationDTO.getTimeslot().getYear() &&
-                    (selectReservationDTO.getDoctor().getAmka().equals(tmsl.getDoctor().getAmka())))
-                     {
+                    Objects.equals(selectReservationDTO.getDoctor().getAmka(), tmsl.getDoctor().getAmka())) {
                 flag = true;
                 tmsl.setFree(false);
             }
@@ -165,7 +165,8 @@ public class ReservationService {
             if (tmsl.isFree() && tmsl.getDay() == selectReservationDTO.getTimeslot().getDay() &&
                     tmsl.getMonth() == selectReservationDTO.getTimeslot().getMonth()
                     && tmsl.getYear() == selectReservationDTO.getTimeslot().getYear() &&
-                    (selectReservationDTO.getDoctor().getAmka().equals(tmsl.getDoctor().getAmka())))
+                    Objects.equals(selectReservationDTO.getDoctor().getAmka(), tmsl.getDoctor().getAmka())
+            )
             {
                 flag = true;
                 tmsl.setFree(false);
@@ -177,12 +178,12 @@ public class ReservationService {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, wrong amka");
             }
             Reservation newReservation = new Reservation(newinsured, selectReservationDTO.getTimeslot(), selectReservationDTO.getDoctor());
-            reservations.add(newReservation);
+            newReservations.add(newReservation);
 
         }else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, not availiable reservation");
         }
-        return reservations;
+        return newReservations;
     }
 
     public Reservation getReservation() {

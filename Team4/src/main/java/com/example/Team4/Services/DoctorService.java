@@ -43,10 +43,10 @@ public class DoctorService {
             if (elem.getAmka() == amka)
                 return elem;
             else
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Insured not found");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Doctor not found");
         }
 
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error, Insured not found");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error, Doctor not found");
     }
 
 
