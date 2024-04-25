@@ -3,6 +3,7 @@ package com.example.Team4.Services;
 import com.example.Team4.Dtos.*;
 import com.example.Team4.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,41 +52,29 @@ public class ReservationService {
         return reservations;
     }
 
-    public List<ReservationDTO> getUpcomingReservation() {
+    public List<ReservationDTO> getUpcomingReservations(int pageNo, int pageSize) {
         LocalDate currentDay = LocalDate.now();
-
-        List<ReservationDTO> upcomingReservations = new ArrayList<>();
-        for (Reservation reservation : reservations) {
-            InsuredDTO insuredObj = new InsuredDTO(reservation.getInsured().getName(), reservation.getInsured().getSurname(), reservation.getInsured().getAmka(),reservation.getInsured().getAfm(),reservation.getInsured().getBirthdate(),reservation.getInsured().getEmail());
-            TimeslotDTO2 timeslotObj = new TimeslotDTO2(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getYear(),reservation.getTimeslot().getHour(),reservation.getTimeslot().getMinutes());
-            DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(),reservation.getDoctor().getAmka());
-            LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
-            if (reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay))
-                upcomingReservations.add(new ReservationDTO(insuredObj,timeslotObj,doctorObj));
-        }
-        return upcomingReservations;
-    }
-    //δοκιμή για pagination (δεν χτυπά error)
-    /*public List<Reservation> getUpcomingReservations(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-
-                                                     @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-        LocalDate currentDay = LocalDate.now();
-        Pageable pageable = (Pageable) PageRequest.of(pageNo, pageSize);
-        int start = pageNo *pageSize;
+        int start = pageNo * pageSize;
         int end = Math.min(start + pageSize, reservations.size());
-        List<Reservation> upcomingReservation = reservations
-                .stream()
-                .skip(start)
-                .limit(end - start)
-                .filter(reservation -> {
-                    LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
-                    return reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay);
-                })
-                .collect(Collectors.toList());
+
+        List<ReservationDTO> upcomingReservation = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            Reservation reservation = reservations.get(i);
+            LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
+
+            if (reservationDate.isAfter(currentDay) || reservationDate.isEqual(currentDay)) {
+                InsuredDTO insuredObj = new InsuredDTO(reservation.getInsured().getName(), reservation.getInsured().getSurname(), reservation.getInsured().getAmka(), reservation.getInsured().getAfm(), reservation.getInsured().getBirthdate(), reservation.getInsured().getEmail());
+                TimeslotDTO2 timeslotObj = new TimeslotDTO2(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getYear(), reservation.getTimeslot().getHour(), reservation.getTimeslot().getMinutes());
+                DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(), reservation.getDoctor().getAmka());
+                upcomingReservation.add(new ReservationDTO(insuredObj, timeslotObj, doctorObj));
+            }
+            if (upcomingReservation.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are not upcoming reservations");
+
+            }
+        }
         return upcomingReservation;
     }
-
-     */
 
     public List<ReservationDTO> getReservationsByDay(int day) {
         LocalDate currentDate = LocalDate.now();
