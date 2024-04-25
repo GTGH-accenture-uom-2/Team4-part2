@@ -35,8 +35,8 @@ public class TimeslotController {
 
 
     @GetMapping("/searchTimeslot")
-    public List<Timeslot> searchTimeslots(@RequestBody TimeslotDTO timeslotDto) {
-        return timeslotService.searchTimeslots(timeslotDto);
+    public List<Timeslot> searchTimeslots(@RequestParam int day, @RequestParam int month, @RequestParam int year) {
+        return timeslotService.searchTimeslots(day, month, year);
     }
 
     @GetMapping("/permonth")

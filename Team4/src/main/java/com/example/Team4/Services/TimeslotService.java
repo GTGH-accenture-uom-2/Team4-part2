@@ -55,22 +55,16 @@ public class TimeslotService {
 
      */
 
-    public List<Timeslot> searchTimeslots(TimeslotDTO timeslotDto) {
+    public List<Timeslot> searchTimeslots(int day, int month, int year) {
         List<Timeslot> freeTimeslot = new ArrayList<>();
         for (Timeslot timeslot : timeslots1) {
-            if (timeslot.isFree() &&
-                    timeslot.getDay() == timeslotDto.getDay() &&
-                    timeslot.getMonth() == timeslotDto.getMonth() &&
-                    timeslot.getYear() == timeslotDto.getYear()) {
+            if (timeslot.isFree() && timeslot.getDay() == day && timeslot.getMonth() == month && timeslot.getYear() == year) {
                 freeTimeslot.add(timeslot);
             }
 
         }
         for (Timeslot timeslot : timeslots2) {
-            if (timeslot.isFree() &&
-                    timeslot.getDay() == timeslotDto.getDay() &&
-                    timeslot.getMonth() == timeslotDto.getMonth()
-                    && timeslot.getYear() == timeslotDto.getYear()) {
+            if (timeslot.isFree() && timeslot.getDay() == day && timeslot.getMonth() == month && timeslot.getYear() == year) {
                 freeTimeslot.add(timeslot);
             }
 
