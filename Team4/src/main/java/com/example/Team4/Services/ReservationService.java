@@ -76,7 +76,7 @@ public class ReservationService {
         return upcomingReservation;
     }
 
-    public List<ReservationDTO> getReservationsByDay(int day) {
+    /*public List<ReservationDTO> getReservationsByDay(int day) {
         LocalDate currentDate = LocalDate.now();
         LocalDate requestDate = currentDate.withDayOfMonth(day);
         LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getDay());
@@ -97,6 +97,22 @@ public class ReservationService {
             }
         }
 
+        return reservationByDay;
+    }
+
+     */
+    public List<ReservationDTO> getReservationsByDay(int day, int month, int year){
+        List<ReservationDTO> reservationByDay = new ArrayList<>();
+        LocalDate reservationDay = LocalDate.of(year,month,day);
+        for(Reservation reservation : reservations) {
+            LocalDate reservationDate = LocalDate.of(reservation.getTimeslot().getYear(),reservation.getTimeslot().getMonth(),reservation.getTimeslot().getDay());
+            if(reservationDate.equals(reservationDay)) {
+                InsuredDTO insuredObj = new InsuredDTO(reservation.getInsured().getName(), reservation.getInsured().getSurname(), reservation.getInsured().getAmka(), reservation.getInsured().getAfm(), reservation.getInsured().getBirthdate(), reservation.getInsured().getEmail());
+                TimeslotDTO2 timeslotObj = new TimeslotDTO2(reservation.getTimeslot().getDay(), reservation.getTimeslot().getMonth(), reservation.getTimeslot().getYear(), reservation.getTimeslot().getHour(), reservation.getTimeslot().getMinutes());
+                DoctorDTO doctorObj = new DoctorDTO(reservation.getDoctor().getName(), reservation.getDoctor().getSurname(), reservation.getDoctor().getAmka());
+                reservationByDay.add(new ReservationDTO(insuredObj,timeslotObj,doctorObj));
+            }
+        }
         return reservationByDay;
     }
 

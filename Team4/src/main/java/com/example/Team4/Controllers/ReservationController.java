@@ -39,8 +39,13 @@ public class ReservationController {
     }
 
     @GetMapping("/byday")
-    public List<ReservationDTO> getReservationsByDay(@RequestParam int day) {
-       return reservationService.getReservationsByDay(day);
+    public List<ReservationDTO> getReservationsByDay(@RequestParam int day,
+                                                     @RequestParam int month,
+                                                     @RequestParam int year) {
+        //int currentYear = LocalDate.now().getYear();
+
+        //LocalDate requestedDay = LocalDate.ofYearDay(currentYear,day);
+       return reservationService.getReservationsByDay(day, month, year);
     }
     @PutMapping("/ChangeReservation")
     public ReservationDTO changeReservation(@RequestParam Long insuredAmka,
