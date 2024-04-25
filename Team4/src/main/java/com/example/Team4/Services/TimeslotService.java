@@ -17,13 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class TimeslotService {
-    List<Timeslot> timeslots = new ArrayList<>();
     @Autowired
     private VaccinationCenterService vaccinationCenterService;
     @Autowired
     private ArrayList<Timeslot> timeslots1;
     @Autowired
     private ArrayList<Timeslot> timeslots2;
+
+    List<Timeslot> timeslots = new ArrayList<>();
 
     @Autowired
     public TimeslotService(ArrayList<Timeslot> timeslots1, ArrayList<Timeslot> timeslots2) {
@@ -38,6 +39,8 @@ public class TimeslotService {
     }
 
     public List<Timeslot> getAllTimeslots() {
+        timeslots.addAll(timeslots1);
+        timeslots.addAll(timeslots2);
         return timeslots;
     }
 
