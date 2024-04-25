@@ -149,9 +149,8 @@ public class ReservationService {
         return new ReservationDTO(insuredDtoObj,timeslotDtoTwoObj,dctDto);
     }
 
-    public List<Reservation> selectReservation(SelectReservationDTO selectReservationDTO) {
+    public Reservation selectReservation(SelectReservationDTO selectReservationDTO) {
         boolean flag= false;
-        List <Reservation> newReservations = new ArrayList<Reservation>();
         for (Timeslot tmsl : timeslotService.getTimeslots1()) {
             if (tmsl.isFree() && tmsl.getDay() == selectReservationDTO.getTimeslot().getDay() &&
                     tmsl.getMonth() == selectReservationDTO.getTimeslot().getMonth()
@@ -178,12 +177,13 @@ public class ReservationService {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, wrong amka");
             }
             Reservation newReservation = new Reservation(newinsured, selectReservationDTO.getTimeslot(), selectReservationDTO.getDoctor());
-            newReservations.add(newReservation);
+            reservations.add(newReservation);
+            return newReservation;
 
         }else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, not availiable reservation");
         }
-        return newReservations;
+
     }
 
     public Reservation getReservation() {

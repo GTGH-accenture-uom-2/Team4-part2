@@ -55,7 +55,7 @@ public class ReservationController {
     }
 
     @PostMapping("/selectReservation")
-    public List<Reservation> selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
+    public Reservation selectReservation(@RequestBody SelectReservationDTO selectReservationDTO){
         return reservationService.selectReservation(selectReservationDTO);
     }
 

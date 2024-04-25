@@ -3,10 +3,8 @@ package com.example.Team4.Models;
 import com.example.Team4.Dtos.SelectReservationDTO;
 
 public class Reservation {
-    //den evala vacCenter gia na to doume stin poreia
     private Insured insured;
     private Timeslot timeslot;
-
     private  Doctor doctor;
 
 
